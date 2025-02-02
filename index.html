@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后室中文数据库</title>
+    <link rel="icon" href="favicon.jpeg" type="image/jpeg">
+    <style>
+        :root {
+            --main-color: #2a2a2a;
+            --accent-color: #00cc99;
+            --text-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* 背景图片容器 */
+        #background {
+            position: fixed; /* 使用 fixed 定位 */
+            top: -10%;
+            left: -10%;
+            width: 120%;
+            height: 120%;
+            background: url('https://static.wikitide.net/backroomszhwiki/4/40/IMG_0407.jpeg') no-repeat center center/cover;
+            z-index: -1;
+            will-change: transform;
+            filter: blur(2px);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 0 20px var(--accent-color);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            position: relative; /* 确保内容在背景之上 */
+            z-index: 1;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px var(--accent-color);
+            animation: flicker 3s infinite;
+        }
+
+        /* 导航栏美化 */
+        .nav {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-bottom: 1px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: sticky; /* 导航栏固定在顶部 */
+            top: 0;
+            z-index: 2;
+        }
+
+        .nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 1rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .nav a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(0, 204, 153, 0.3), transparent);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+            border-radius: 50%;
+        }
+
+        .nav a:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 8px var(--accent-color);
+            box-shadow: 0 0 15px var(--accent-color);
+            background: rgba(0, 0, 0, 0.5);
+            transform: scale(1.05);
+        }
+
+        .nav img {
+            height: 40px;
+            margin-right: 1rem;
+            vertical-align: middle;
+            filter: drop-shadow(0 0 5px var(--accent-color));
+        }
+
+        .portal-button {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--text-color);
+            padding: 1rem 2rem;
+            margin: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .portal-button:hover {
+            background: linear-gradient(45deg, var(--accent-color), #00aaff);
+            box-shadow: 0 0 20px var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* 确保footer没有背景图片 */
+        footer {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+        }
+		  footer a {
+				color: white;
+		  }
+
+        /* 页面内容排版优化 */
+        .container p {
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .container h2 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* 加载动画 */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--main-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        #loading div {
+            border: 4px solid var(--accent-color);
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 0.5s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div id="loading">
+        <div></div>
+    </div>
+
+    <!-- 背景图片容器 -->
+    <div id="background"></div>
+
+    <nav class="nav">
+        <img src="https://static.wikitide.net/backroomszhwiki/thumb/1/16/SiteLogo.png/400px-SiteLogo.png" 
+             style="height: 40px; margin-right: 1rem; vertical-align: middle;">
+        <a href="https://backroomszh.wiki/wiki/层级列表" target="_blank">层级</a>
+        <a href="https://backroomszh.wiki/wiki/实体列表">实体</a>
+        <a href="https://backroomszh.wiki/wiki/物品列表">物品</a>
+        <a href="https://backroomszh.wiki/wiki/效应列表">效应</a>
+    </nav><br><br>
+
+    <div class="container">
+        <h1 class="title">The Backrooms</h1>
+        <small>你曾经来过这里</small><br>
+        
+        <p><i>“假如你在异常的地方从现实中脱离，你最后会来到后室。这里除了无尽、空荡的黄色走廊、阴暗的黄色荧光灯光、坑坑洼洼的潮湿地毯和日光灯那令人发狂的嗡嗡声以外几乎什么也没有。如果你听见周围有什么响动，愿神保佑,因为它一定也发现了你……”</i></p>
+        
+        <a href="https://backroomszh.wiki/wiki/Home" target="_blank">
+            <a href="https://backroomszh.wiki/wiki/Home"><button class="portal-button"><big> 进入数据库 </big></button></a>
+        </a>
+
+        <section id="about">
+            <h2>流浪者，欢迎来到后室……</h2>
+            <p>所谓后室,是一个脱离了你所熟知的“现实”的一片异常空间，以其独特、格外危险的环境、种种多变的威胁以及空荡诡异的阈限空间而闻名。不要被这里的任何假象所迷惑，这里不安全。<br><br>
+
+你现在所处于的黄色房间,通常被称为“Level 0”。克服心中因为迷路产生的恐惧,这里虽然诡异,但并不算危险,规划好物资,不要惊慌。后室是由以无数不同形式,互相之间独立存在着的空间,“层级”组成的,我们对其进行了编号,例如你现在所在的Level 0。不出意外,你接下来可能会来到的Level 1与Level CN 0都是上述层级沧海中的一粟。许多层级彼此之间联系较为密切,大致形成了一个树状网络,我们将每个主干上分出的“枝杈”称为层群。例如,Level CN 0就归属于CN层群。这是一个新近发现的层群。根据数字越小往往混乱程度就越低的原则,我们正在比较并选出CN层群的层级顺序。如果你能为我们的数据库添砖加瓦,我们将感激不尽。</p><br>
+            <h2>我们是谁？</h2>
+            <p>我们是M.E.G.,The Major Explorer Group(探索者集团)的简称。我们一个由像你一样落入后室的流浪者们建立的公益组织,目前正在进行后室的探索、研究,同时也担当建立并维护社区的工作。我们正在努力为全体成员提供后室中绝无仅有的物质和精神享受,若资询加入事宜,请至任意一个M.E.G.基地。<br><br>
+
+不要太过担心迷路。只要不是遇到服务器全体维护或者是你正处于一个新层级,数据库的“Epitaph”系统都会自动帮助你定位自己所处于的层级和精度为五十米范围内的准确位置。请查询显示出的层级列表或CN层群层级列表来获得更远的信息。
+
+祝你好运!</p>
+        </section>
+    </div>
+
+    <footer>
+        <small>© 后室中文数据库 - 版权所有</small><br>
+<small>
+            <a href="https://backroomszh.wiki/wiki/Project:免责声明" target="_blank">免责声明</a> |
+            <a href="mailto:contact@backroomszh.wiki">站务邮箱</a>
+        </small>
+    </footer>
+
+    <script>
+        // 页面加载完成后初始化背景动画
+        document.addEventListener('DOMContentLoaded', function () {
+            const elements = document.querySelectorAll('h1, h2, p, a, button, small, .nav a, .container, footer');
+            elements.forEach((el, index) => {
+                el.style.opacity = 0;
+                setTimeout(() => {
+                    el.style.transition = `opacity 2s ease-in ${index * 0.2}s`;
+                    el.style.opacity = 1;
+                }, 50);
+            });
+
+            // 背景图片反弹动画
+            const background = document.getElementById('background');
+            let posX = 0;
+            let posY = 0;
+            let speedX = 0.1;
+            let speedY = 0.1;
+            const maxX = 30;
+            const maxY = 30;
+
+            function animateBackground() {
+                posX += speedX;
+                posY += speedY;
+
+                if (posX > maxX || posX < -maxX) {
+                    speedX = -speedX;
+                }
+                if (posY > maxY || posY < -maxY) {
+                    speedY = -speedY;
+                }
+
+                background.style.transform = `translate(${posX}px, ${posY}px)`;
+                requestAnimationFrame(animateBackground);
+            }
+
+            animateBackground();
+
+            // 隐藏加载动画
+            const loading = document.getElementById('loading');
+            setTimeout(() => {
+                loading.style.display = 'none';
+            }, 300);
+        });
+    </script>
+</body>
+</html>
