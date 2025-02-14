@@ -320,9 +320,9 @@ End of Statcounter Code -->
             elements.forEach((el, index) => {
                 el.style.opacity = 0;
                 setTimeout(() => {
-                    el.style.transition = `opacity 2s ease-in ${index * 0}s`;
+                    el.style.transition = `opacity 2s ease-in ${index * 0.2}s`;
                     el.style.opacity = 1;
-                }, 800);
+                }, 50);
             });
 
             // 背景图片反弹动画
@@ -356,7 +356,7 @@ End of Statcounter Code -->
             const loading = document.getElementById('loading');
             setTimeout(() => {
                 loading.style.display = 'none';
-            }, 0);
+            }, 300);
         });
 
 
