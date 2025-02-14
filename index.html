@@ -352,11 +352,40 @@ End of Statcounter Code -->
             animateBackground();
 
             // 隐藏加载动画
+
+
+	    // 计数器调整
             const loading = document.getElementById('loading');
             setTimeout(() => {
                 loading.style.display = 'none';
             }, 0);
         });
+	    <script>
+  const img = document.getElementById('myImage');
+
+  img.onerror = function() {
+    // 在 <img> 标签的位置插入 HTML
+    img.insertAdjacentHTML(
+      'afterend',
+      '<script type="text/javascript">
+var sc_project=13087258; 
+var sc_invisible=0; 
+var sc_security="f5edb82b"; 
+var scJsHost = "https://";
+document.write("<sc"+"ript type='text/javascript' src='" + scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script>
+<noscript><div class="statcounter"><a title="Web Analytics Made Easy -
+Statcounter" href="https://statcounter.com/" target="_blank"><img
+class="statcounter" src="https://c.statcounter.com/13087258/0/f5edb82b/0/"
+alt="Web Analytics Made Easy - Statcounter"
+referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>'
+    );
+    
+    // 移除 <img> 标签
+    img.remove();
+  };
+</script>
     </script>
 </body>
 </html>
