@@ -299,7 +299,7 @@ alt="Web Analytics Made Easy - Statcounter"
 referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 End of Statcounter Code -->
 	<h3>页面加载次数</h3>
-	<img src="https://count.getloli.com/@后室中文数据库?name=%E5%90%8E%E5%AE%A4%E4%B8%AD%E6%96%87%E6%95%B0%E6%8D%AE%E5%BA%93&theme=rule34&padding=7&offset=0&align=top&scale=1&pixelated=0&darkmode=0" alt="计数器" /><br>
+	<img id="Counter" src="https://count.getloli.com/@后室中文数据库?name=%E5%90%8E%E5%AE%A4%E4%B8%AD%E6%96%87%E6%95%B0%E6%8D%AE%E5%BA%93&theme=rule34&padding=7&offset=0&align=top&scale=1&pixelated=0&darkmode=0" alt="计数器" /><br>
 	本站已稳定运行了
         <script>
         var webstar = new Date("8/31/2024");
@@ -320,9 +320,9 @@ End of Statcounter Code -->
             elements.forEach((el, index) => {
                 el.style.opacity = 0;
                 setTimeout(() => {
-                    el.style.transition = `opacity 2s ease-in ${index * 0.2}s`;
+                    el.style.transition = `opacity 2s ease-in ${index * 0}s`;
                     el.style.opacity = 1;
-                }, 50);
+                }, 800);
             });
 
             // 背景图片反弹动画
@@ -352,16 +352,16 @@ End of Statcounter Code -->
             animateBackground();
 
             // 隐藏加载动画
-
-
-	    // 计数器调整
+		
             const loading = document.getElementById('loading');
             setTimeout(() => {
                 loading.style.display = 'none';
             }, 0);
         });
-	    <script>
-  const img = document.getElementById('myImage');
+
+
+	    // 计数器调整
+  const img = document.getElementById('Counter');
 
   img.onerror = function() {
     // 在 <img> 标签的位置插入 HTML
@@ -385,7 +385,6 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>'
     // 移除 <img> 标签
     img.remove();
   };
-</script>
     </script>
 </body>
 </html>
