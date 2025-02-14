@@ -364,16 +364,17 @@ End of Statcounter Code -->
 
        <script>
 	    // 计数器调整
-  const img = document.getElementById('Counter');
+const img = document.getElementById('Counter');
 
   img.onerror = function() {
-    // 在 <img> 标签的位置插入 HTML
-    img.insertAdjacentHTML(
-      'afterend',
-      '正在统计……'
-    );
-    // 移除 <img> 标签
-    img.remove();
+    // 创建一个文本节点
+    const textNode = document.createTextNode('数据加载失败，请刷新页面后重试');
+    
+    // 获取父元素
+    const parent = img.parentElement;
+    
+    // 用文本节点替换 <img> 标签
+    parent.replaceChild(textNode, img);
   };
     </script>
 </body>
