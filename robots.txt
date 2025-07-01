@@ -1,4 +1,4 @@
 # robots.txt generated at https://www.sojson.com/robots/
-Disallow:https://backroomszh.wiki/sitemap.xml
+Disallow:https://www.backroomszh.org/sitemap.xml
 User-agent: *
 Disallow:
