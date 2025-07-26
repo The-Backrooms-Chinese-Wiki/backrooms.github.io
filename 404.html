@@ -1,1 +1,302 @@
-404 Not Found.
+<!DOCTYPE html>
+<html lang="zh-CN">
+ 
+<head>
+    <meta name="robots" content="noindex,nofollow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>无效页面标题</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 后室风格基础设定 */
+        :root {
+            --backrooms-yellow: #e9d66b;
+            --fluorescent-flicker: #f0f8c0;
+            --concrete-gray: #7a7a7a;
+            --hazard-red: #c11b17;
+            --entity-shadow: #3a3a3a;
+        }
+ 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+ 
+        body {
+            background-color: #1a1a1a;
+            color: #ccc;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image:
+                repeating-linear-gradient(0deg,
+                    rgba(58, 58, 58, 0.1),
+                    rgba(58, 58, 58, 0.1) 1px,
+                    transparent 1px,
+                    transparent 20px),
+                repeating-linear-gradient(90deg,
+                    rgba(58, 58, 58, 0.1),
+                    rgba(58, 58, 58, 0.1) 1px,
+                    transparent 1px,
+                    transparent 20px);
+        }
+ 
+        /* 荧光灯管故障效果 */
+        .fluorescent-flicker {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(180deg,
+                    rgba(240, 248, 192, 0.05),
+                    rgba(240, 248, 192, 0.15) 2px,
+                    transparent 3px,
+                    transparent 8px);
+            animation: flicker 3s infinite alternate;
+            z-index: -1;
+            pointer-events: none;
+        }
+ 
+        .container {
+            max-width: 800px;
+            width: 90%;
+            background: rgba(30, 30, 30, 0.85);
+            border: 1px solid #444;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+            position: relative;
+            z-index: 10;
+            border-left: 5px solid var(--hazard-red);
+        }
+ 
+        /* M.E.G.数据库文档标题 */
+        .database-header {
+            border-bottom: 1px dashed #555;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+ 
+        .database-header h1 {
+            font-size: 2.8rem;
+            color: var(--backrooms-yellow);
+            text-shadow: 0 0 10px rgba(233, 214, 107, 0.3);
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+ 
+        .database-header h2 {
+            font-size: 1.3rem;
+            font-weight: normal;
+            color: #aaa;
+        }
+ 
+        .level-tag {
+            position: absolute;
+            top: 10px;
+            right: 0;
+            background: #333;
+            padding: 5px 10px;
+            border: 1px solid #555;
+            font-size: 0.9rem;
+            color: var(--hazard-red);
+        }
+ 
+        /* 生存难度标识 */
+        .survival-difficulty {
+            display: flex;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(50, 20, 20, 0.3);
+            border-left: 3px solid var(--hazard-red);
+        }
+ 
+        .difficulty-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+        }
+ 
+        .difficulty-item h3 {
+            color: var(--hazard-red);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+ 
+        .difficulty-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+ 
+        /* 后室内容区域 */
+        .backrooms-content {
+            line-height: 1.7;
+            margin-bottom: 30px;
+        }
+ 
+        .backrooms-content p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+ 
+        .entity-warning {
+            background: rgba(193, 27, 23, 0.15);
+            border: 1px solid var(--hazard-red);
+            padding: 15px;
+            margin: 20px 0;
+            position: relative;
+        }
+ 
+        .error-warning:before {
+            content: "⚠️ 错误内容";
+            position: absolute;
+            top: -12px;
+            left: 15px;
+            background: #1a1a1a;
+            padding: 0 10px;
+            color: var(--hazard-red);
+            font-size: 0.9rem;
+        }
+ 
+        /* 导航按钮 */
+        .navigation-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+ 
+        .nav-button {
+            padding: 15px;
+            background: #333;
+            border: 1px solid #444;
+            color: var(--backrooms-yellow);
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+ 
+        .nav-button:hover {
+            background: #3a3a3a;
+            border-color: #555;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+ 
+ 
+ 
+        .nav-button:hover:before {
+            left: 100%;
+        }
+ 
+        /* 数据库信息 */
+        .database-info {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px dashed #555;
+            font-size: 0.85rem;
+            color: #777;
+        }
+ 
+        /* 故障动画 */
+        @keyframes flicker {
+ 
+            0%,
+            19%,
+            21%,
+            23%,
+            25%,
+            54%,
+            56%,
+            100% {
+                opacity: 0.8;
+            }
+ 
+            20%,
+            24%,
+            55% {
+                opacity: 0.2;
+            }
+        }
+ 
+        @keyframes glitch {
+            0% {
+                transform: translate(0);
+            }
+ 
+            20% {
+                transform: translate(-3px, 3px);
+            }
+ 
+            40% {
+                transform: translate(-3px, -3px);
+            }
+ 
+            60% {
+                transform: translate(3px, 3px);
+            }
+ 
+            80% {
+                transform: translate(3px, -3px);
+            }
+ 
+            100% {
+                transform: translate(0);
+            }
+        }
+ 
+        .glitch {
+            animation: glitch 0.5s infinite;
+        }
+ 
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .survival-difficulty {
+                flex-direction: column;
+            }
+ 
+            .difficulty-item {
+                margin-bottom: 15px;
+            }
+ 
+            .database-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+ 
+<body>
+    <div class="fluorescent-flicker"></div>
+ 
+    <div class="container">
+        <p>
+        <div class="database-header">
+            <h1 class="glitch">Error 404</h1>
+            <h2>"迷失接口" - 无效的页面名称</h2>
+            <div class="level-tag">后室中文数据库 Error.</div>
+        </div>
+        <div class="backrooms-content">
+            <div class="error-warning">
+                该页面没有内容，请检查是否输错链接。如果链接正确，则很可能是由于该页面刚刚被配置。<br><br>请尝试刷新页面，或是前往主页。
+            </div><br>
+            <center>
+                <a href="https://www.backroomszh.org" class="nav-button">
+                    <i class="fas fa-home"></i> 返回主页
+                </a>
+            </center>
+            </p>
+        </div>
+    </div>
+</body>
+ 
+</html
