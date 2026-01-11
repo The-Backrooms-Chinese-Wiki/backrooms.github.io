@@ -1,0 +1,6 @@
+使用以下命令配置Pywikibot：
+
+cd "C:\Users\baggi\Desktop\Pywikibot\Pywikibot\pywikibot-9.6.2\pywikibot\scripts"
+py generate_user_files.py
+
+Winsows家庭版（正版）激活码：H2732-NPWH7-BYBVJ-22BJR-X2FJX
