@@ -509,7 +509,7 @@
                 <li><strong>层群归属</strong>：表明该文章属于普通层群还是CN层群。
                     <div class="category-example">[[Category:普通层群]]</div>
                     <div class="category-example">[[Category:CN层群]]</div>
-                    <p class="note">注意：中心页、故事和组织页面通常不需要层群归属，层级、物品和实体页面需要层群归属。</p>
+                    <p class="note">注意：中心页、故事和组织页面通常不需要层群归属，更多世界页面同样不需要。</p>
                 </li>
                 <li><strong>对象分级</strong>：表明文章描述对象的属性和危险程度。
                     <div class="category-example">[[Category:生存难度0]]</div>
@@ -556,7 +556,7 @@
                         <label for="type-center">中心页</label>
                     </div>
                     <div class="radio-item">
-                        <input type="radio" id="type-center" name="page-type" value="中心页">
+                        <input type="radio" id="type-other" name="page-type" value="更多世界">
                         <label for="type-other">更多世界</label>
                     </div>
                 </div>
@@ -875,9 +875,9 @@
             // Show/hide warning for certain page types
             const type = pageType.value;
             const needsCluster = ['层级', '物品', '实体'].includes(type);
-            const notRecommended = ['中心页', '故事', '组织', '更多世界'].includes(type);
+            const notRecommended = ['中心页', '故事', '组织', '更多世界'];
             
-            if (notRecommended) {
+            if (notRecommended.includes(type)) {
                 clusterWarningType.textContent = type;
                 clusterWarning.classList.remove('hidden');
             } else {
