@@ -554,6 +554,10 @@
                         <input type="radio" id="type-center" name="page-type" value="中心页">
                         <label for="type-center">中心页</label>
                     </div>
+                    <div class="radio-item">
+                        <input type="radio" id="type-center" name="page-type" value="中心页">
+                        <label for="type-other">更多世界</label>
+                    </div>
                 </div>
             </div>
 
@@ -870,7 +874,7 @@
             // Show/hide warning for certain page types
             const type = pageType.value;
             const needsCluster = ['层级', '物品', '实体'].includes(type);
-            const notRecommended = ['中心页', '故事', '组织'].includes(type);
+            const notRecommended = ['中心页', '故事', '组织', '更多世界'].includes(type);
             
             if (notRecommended) {
                 clusterWarningType.textContent = type;
