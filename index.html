@@ -34,26 +34,22 @@
         :root {
             --yellow-primary: #d4a017;
             --yellow-primary-hover: #b8891a;
-            --yellow-light: #fcf3cf;
-            --yellow-bg: #fffce8;
-            --yellow-surface: rgba(255, 250, 225, 0.78);
-            --yellow-card: rgba(255, 248, 228, 0.73);
             --yellow-text: #3a3220;
             --yellow-text-secondary: #5c5340;
-            --yellow-border: rgba(180, 150, 90, 0.18);
-            --yellow-shadow: 0 8px 32px rgba(160, 120, 40, 0.14);
-            --fluent-radius: 12px;
-            --fluent-blur: 20px;
-            --hero-overlay: rgba(255, 253, 238, 0.67);
+            --yellow-border: rgba(176, 147, 86, 0.2);
+            --fluent-radius: 18px;
+            --fluent-blur: 22px;
         }
 
         html {
             scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+            height: 100%;
         }
 
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
-            background: var(--yellow-bg);
+            background: #fffce8;
             color: var(--yellow-text);
             line-height: 1.7;
             min-height: 100vh;
@@ -64,38 +60,39 @@
             width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: var(--yellow-bg);
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(140, 110, 60, 0.25);
+            background: rgba(127, 101, 55, 0.3);
             border-radius: 99px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(140, 110, 60, 0.4);
+            background: rgba(127, 101, 55, 0.5);
         }
 
         /* ===== Navigation ===== */
         .nav {
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.25rem;
             padding: 0.7rem 1.5rem;
-            background: var(--yellow-surface);
-            backdrop-filter: blur(var(--fluent-blur));
-            -webkit-backdrop-filter: blur(var(--fluent-blur));
+            background: rgba(255, 250, 234, 0.78);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             border-bottom: 1px solid var(--yellow-border);
             flex-wrap: wrap;
-            transition: background 0.3s ease;
         }
 
         .nav-logo {
             height: 34px;
             margin-right: 0.75rem;
-            filter: drop-shadow(0 0 6px rgba(190, 155, 50, 0.2));
+            filter: drop-shadow(0 0 6px rgba(192, 159, 55, 0.2));
             transition: transform 0.25s ease;
             flex-shrink: 0;
         }
@@ -130,85 +127,138 @@
 
         .nav a:hover {
             color: #3a3020;
-            background: rgba(210, 170, 60, 0.15);
+            background: rgba(214, 177, 69, 0.15);
         }
         .nav a:hover::after {
             width: 54%;
         }
 
-        /* ===== Hero ===== */
-        .hero {
-            position: relative;
+        /* ===== 通用吸附区块样式 ===== */
+        .snap-block {
+            scroll-snap-align: start;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 5rem 2rem 4.5rem;
-            min-height: 70vh;
-            background:
-                var(--hero-overlay),
-                url('https://static.wikitide.net/backroomszhwiki/d/d5/Wallpaper.png') center center / cover no-repeat;
+            align-items: center;
+            padding: 5rem 2.5rem;
+            position: relative;
+            /* 背景图片固定 + 边缘渐变遮罩实现过渡 */
             background-attachment: fixed;
-            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            /* 每个区块通过行内样式或额外类设置背景图片 */
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 50% 80%, rgba(215, 185, 80, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-content {
+        /* 每个区块内部的半透明毛玻璃内容层 */
+        .block-content {
             position: relative;
             z-index: 2;
-            max-width: 770px;
-            animation: heroFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            max-width: 840px;
+            width: 100%;
+            padding: 2.8rem 3rem;
+            background: rgba(255, 248, 227, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: var(--fluent-radius);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 40px rgba(107, 85, 34, 0.12);
+        }
+
+        /* 标题 */
+        .block-content h2 {
+            font-size: 2rem;
+            font-weight: 540;
+            color: #2f281b;
+            margin-bottom: 1.4rem;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .block-content h2 .accent-line {
+            display: inline-block;
+            width: 5px;
+            height: 32px;
+            background: var(--yellow-primary);
+            border-radius: 99px;
+            flex-shrink: 0;
+        }
+
+        .block-content p {
+            color: var(--yellow-text-secondary);
+            font-size: 1.125rem;
+            line-height: 1.9;
+            margin-bottom: 1rem;
+        }
+
+        .block-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ===== Hero 特殊样式 ===== */
+        .hero {
+            text-align: center;
+            padding: 5rem 2rem 4.5rem;
+            /* Hero 使用单独的渐变遮罩，更通透 */
+            background-image: 
+                linear-gradient(to bottom, 
+                    rgba(255, 254, 244, 0.7) 0%, 
+                    rgba(255, 254, 244, 0.2) 30%, 
+                    rgba(255, 254, 244, 0.2) 70%, 
+                    rgba(255, 254, 244, 0.7) 100%),
+                url('https://static.wikitide.net/backroomszhwiki/d/d5/Wallpaper.png');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero .block-content {
+            background: rgba(255, 250, 236, 0.45);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: none;
+            box-shadow: none;
+            padding: 2rem 2.5rem;
         }
 
         .hero-title {
             font-size: clamp(2.8rem, 9vw, 5.2rem);
-            font-weight: 270;
+            font-weight: 295;
             letter-spacing: 0.02em;
             color: #2c2418;
-            text-shadow: 0 2px 30px rgba(245, 235, 195, 0.5);
+            text-shadow: 0 2px 30px rgba(247, 241, 213, 0.6);
             margin-bottom: 0.35rem;
             line-height: 1.15;
         }
 
         .hero-title span {
-            font-weight: 570;
+            font-weight: 600;
             color: #b3891a;
-            text-shadow: 0 0 30px rgba(196, 156, 42, 0.2);
+            text-shadow: 0 0 30px rgba(203, 167, 56, 0.25);
         }
 
         .hero-sub {
             font-size: 1rem;
             color: rgba(60, 50, 32, 0.55);
             letter-spacing: 0.3em;
-            font-weight: 395;
+            font-weight: 415;
             margin-bottom: 1.8rem;
             text-transform: uppercase;
         }
 
         .hero-quote {
-            font-size: 1.05rem;
-            color: rgba(50, 42, 28, 0.79);
-            max-width: 650px;
+            font-size: 1.085rem;
+            color: rgba(50, 42, 28, 0.86);
+            max-width: 720px;
             margin: 0 auto 2.4rem;
             line-height: 1.8;
             font-style: italic;
-            font-weight: 355;
-            text-shadow: 0 1px 20px rgba(255, 244, 211, 0.3);
+            font-weight: 385;
+            text-shadow: 0 1px 20px rgba(255, 251, 229, 0.35);
         }
 
-        .hero-quote i {
-            font-style: italic;
-        }
-
-        /* ===== Button ===== */
         .btn-fluent {
             display: inline-flex;
             align-items: center;
@@ -219,11 +269,11 @@
             padding: 0.85rem 2.6rem;
             border-radius: 999px;
             font-size: 1.15rem;
-            font-weight: 595;
+            font-weight: 625;
             font-family: inherit;
             cursor: pointer;
             transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 24px rgba(194, 158, 46, 0.35);
+            box-shadow: 0 4px 24px rgba(200, 169, 62, 0.42);
             text-decoration: none;
             letter-spacing: 0.015em;
             position: relative;
@@ -234,7 +284,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(255, 251, 206, 0.25) 0%, transparent 60%);
+            background: linear-gradient(135deg, rgba(255, 255, 228, 0.25) 0%, transparent 60%);
             pointer-events: none;
             border-radius: inherit;
         }
@@ -242,13 +292,13 @@
         .btn-fluent:hover {
             background: var(--yellow-primary-hover);
             transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 8px 36px rgba(186, 152, 41, 0.47);
+            box-shadow: 0 8px 36px rgba(191, 158, 52, 0.52);
             color: #1f1810;
         }
 
         .btn-fluent:active {
             transform: translateY(0) scale(0.98);
-            box-shadow: 0 2px 12px rgba(183, 149, 43, 0.3);
+            box-shadow: 0 2px 12px rgba(191, 155, 52, 0.34);
         }
 
         .btn-fluent svg {
@@ -258,114 +308,57 @@
             flex-shrink: 0;
         }
 
-        /* ===== Container / Cards ===== */
-        .container {
-            max-width: 890px;
-            margin: 0 auto;
-            padding: 2.8rem 1.8rem 3.6rem;
+        /* ===== 卡片区块（各自独立背景） ===== */
+        .card1 {
+            background-image: 
+                linear-gradient(to bottom, 
+                    rgba(255, 248, 219, 0.75) 0%, 
+                    rgba(255, 248, 219, 0.15) 25%, 
+                    rgba(255, 248, 219, 0.15) 75%, 
+                    rgba(255, 248, 219, 0.75) 100%),
+                url('https://static.wikitide.net/backroomszhwiki/d/d5/Wallpaper.png');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
         }
 
-        .card {
-            background: var(--yellow-card);
-            backdrop-filter: blur(var(--fluent-blur));
-            -webkit-backdrop-filter: blur(var(--fluent-blur));
-            border: 1px solid var(--yellow-border);
-            border-radius: var(--fluent-radius);
-            padding: 2.2rem 2.4rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--yellow-shadow);
-            transition: transform 0.4s cubic-bezier(0.19, 1, 0.29, 1),
-                box-shadow 0.4s ease,
-                border-color 0.3s ease;
-            /* 初始可见，没有任何隐藏动画 */
-            opacity: 1;
-            transform: translateY(0);
+        .card2 {
+            background-image: 
+                linear-gradient(to bottom, 
+                    rgba(245, 238, 209, 0.75) 0%, 
+                    rgba(245, 238, 209, 0.15) 25%, 
+                    rgba(245, 238, 209, 0.15) 75%, 
+                    rgba(245, 238, 209, 0.75) 100%),
+                url('https://static.wikitide.net/backroomszhwiki/d/d5/Wallpaper.png');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
         }
 
-        /* 浮动悬停效果 —— 独立动画，不与初始状态冲突 */
-        .card:hover {
-            animation: cardFloat 2.2s ease-in-out infinite;
-            box-shadow: 0 18px 48px rgba(136, 104, 30, 0.22);
-            border-color: rgba(168, 134, 54, 0.38);
-        }
-
-        @keyframes cardFloat {
-            0% {
-                transform: translateY(-3px);
-            }
-            50% {
-                transform: translateY(-11px);
-            }
-            100% {
-                transform: translateY(-3px);
-            }
-        }
-
-        /* 页面加载后的淡入效果（通过 JS 添加类） */
-        .card.fade-in {
-            animation: cardEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
-        @keyframes cardEntry {
-            0% {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card h2 {
-            font-size: 1.5rem;
-            font-weight: 475;
-            color: #2f281b;
-            margin-bottom: 1rem;
-            letter-spacing: -0.01em;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .card h2 .accent-line {
-            display: inline-block;
-            width: 4px;
-            height: 26px;
-            background: var(--yellow-primary);
-            border-radius: 99px;
-            flex-shrink: 0;
-        }
-
-        .card p {
-            color: var(--yellow-text-secondary);
-            font-size: 1rem;
-            line-height: 1.84;
-            margin-bottom: 0.8rem;
-        }
-
-        .card p:last-child {
-            margin-bottom: 0;
-        }
-
-        hr {
-            border: none;
-            border-top: 1px solid var(--yellow-border);
-            margin: 2.4rem 0 2.8rem;
-            opacity: 0.5;
+        .card3 {
+            background-image: 
+                linear-gradient(to bottom, 
+                    rgba(250, 242, 214, 0.75) 0%, 
+                    rgba(250, 242, 214, 0.15) 25%, 
+                    rgba(250, 242, 214, 0.15) 75%, 
+                    rgba(250, 242, 214, 0.75) 100%),
+                url('https://static.wikitide.net/backroomszhwiki/d/d5/Wallpaper.png');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
         }
 
         /* ===== Footer ===== */
         footer {
-            background: var(--yellow-surface);
-            backdrop-filter: blur(var(--fluent-blur));
-            -webkit-backdrop-filter: blur(var(--fluent-blur));
+            scroll-snap-align: end;
+            background: rgba(255, 250, 234, 0.78);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             border-top: 1px solid var(--yellow-border);
             text-align: center;
             padding: 2rem 1.5rem 2.2rem;
-            font-size: 0.885rem;
+            font-size: 0.915rem;
             color: var(--yellow-text-secondary);
-            margin-top: 1rem;
         }
 
         footer a {
@@ -379,23 +372,23 @@
         }
 
         footer .sep {
-            color: rgba(124, 102, 54, 0.2);
+            color: rgba(131, 107, 59, 0.2);
             margin: 0 0.6rem;
         }
 
         footer .stats {
             margin-top: 0.8rem;
-            font-size: 0.825rem;
-            opacity: 0.71;
+            font-size: 0.855rem;
+            opacity: 0.74;
         }
 
         footer iframe {
             margin-top: 0.8rem;
             border-radius: 6px;
-            opacity: 0.84;
+            opacity: 0.87;
         }
 
-        /* ===== Hero animation ===== */
+        /* ===== Hero 动画 ===== */
         @keyframes heroFadeIn {
             0% {
                 opacity: 0;
@@ -407,119 +400,76 @@
             }
         }
 
-        .nav,
-        footer {
-            animation: fadeSlide 0.9s ease forwards;
-        }
-        @keyframes fadeSlide {
-            0% {
-                opacity: 0;
-                transform: translateY(-6px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        footer {
-            animation-name: fadeSlideUp;
-        }
-        @keyframes fadeSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hero .block-content {
+            animation: heroFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         /* ===== Responsive ===== */
-        @media (max-width: 840px) {
+        @media (max-width: 860px) {
+            .snap-block {
+                padding: 4rem 1.8rem;
+            }
+            .block-content {
+                padding: 2rem 1.8rem;
+            }
+            .block-content h2 {
+                font-size: 1.6rem;
+            }
+            .block-content p {
+                font-size: 1rem;
+            }
             .hero {
                 padding: 3.6rem 1.5rem 3.2rem;
-                min-height: 60vh;
-                background-attachment: scroll;
             }
             .hero-title {
                 font-size: clamp(2.2rem, 10vw, 3.6rem);
             }
             .hero-quote {
-                font-size: 0.96rem;
+                font-size: 0.965rem;
             }
             .btn-fluent {
                 padding: 0.7rem 2rem;
-                font-size: 1.05rem;
-            }
-            .container {
-                padding: 2rem 1.2rem 2.8rem;
-            }
-            .card {
-                padding: 1.6rem 1.6rem;
-            }
-            .card h2 {
-                font-size: 1.3rem;
+                font-size: 1.055rem;
             }
             .nav a {
                 padding: 0.3rem 0.9rem;
-                font-size: 0.855rem;
+                font-size: 0.845rem;
             }
             .nav-logo {
                 height: 27px;
                 margin-right: 0.4rem;
             }
-            .card:hover {
-                animation: cardFloatMobile 2.2s ease-in-out infinite;
-            }
-            @keyframes cardFloatMobile {
-                0% {
-                    transform: translateY(-2px);
-                }
-                50% {
-                    transform: translateY(-8px);
-                }
-                100% {
-                    transform: translateY(-2px);
-                }
-            }
         }
 
-        @media (max-width: 610px) {
-            .card:hover {
-                animation: cardFloatSmall 2.4s ease-in-out infinite;
+        @media (max-width: 520px) {
+            .snap-block {
+                padding: 3rem 1.2rem;
             }
-            @keyframes cardFloatSmall {
-                0% {
-                    transform: translateY(-1px);
-                }
-                50% {
-                    transform: translateY(-6px);
-                }
-                100% {
-                    transform: translateY(-1px);
-                }
+            .block-content {
+                padding: 1.6rem 1.2rem;
             }
-        }
-
-        @media (max-width: 490px) {
+            .block-content h2 {
+                font-size: 1.3rem;
+            }
+            .block-content p {
+                font-size: 0.915rem;
+            }
             .hero {
                 padding: 2.8rem 1rem 2.6rem;
-                min-height: 52vh;
             }
             .hero-title {
                 font-size: 2rem;
             }
             .hero-sub {
-                font-size: 0.765rem;
-                letter-spacing: 0.2em;
+                font-size: 0.675rem;
+                letter-spacing: 0.14em;
             }
             .hero-quote {
-                font-size: 0.865rem;
+                font-size: 0.785rem;
             }
             .btn-fluent {
                 padding: 0.6rem 1.6rem;
-                font-size: 0.945rem;
+                font-size: 0.865rem;
                 width: 100%;
                 justify-content: center;
             }
@@ -529,31 +479,15 @@
             }
             .nav a {
                 padding: 0.23rem 0.65rem;
-                font-size: 0.755rem;
+                font-size: 0.665rem;
             }
             .nav-logo {
                 height: 22px;
                 margin-right: 0.2rem;
             }
-            .container {
-                padding: 1.2rem 0.8rem 2rem;
-            }
-            .card {
-                padding: 1.2rem 1.2rem;
-                border-radius: 10px;
-            }
-            .card h2 {
-                font-size: 1.1rem;
-            }
-            .card p {
-                font-size: 0.905rem;
-            }
             footer {
-                font-size: 0.745rem;
+                font-size: 0.655rem;
                 padding: 1.2rem 0.8rem;
-            }
-            .card:hover {
-                animation: cardFloatSmall 2.4s ease-in-out infinite;
             }
         }
 
@@ -582,9 +516,9 @@
         <a href="https://wiki.backroomszh.org/%E6%95%88%E5%BA%94%E5%88%97%E8%A1%A8" target="_blank">效应</a>
     </nav>
 
-    <!-- ===== Hero ===== -->
-    <header class="hero">
-        <div class="hero-content">
+    <!-- ===== Hero (第一个吸附块) ===== -->
+    <header class="hero snap-block">
+        <div class="block-content">
             <h1 class="hero-title">The <span>Backrooms</span></h1>
             <p class="hero-sub">你曾经来过这里</p>
             <p class="hero-quote">
@@ -595,20 +529,25 @@
                 进入数据库
             </a>
         </div>
+        <div style="text-align:center;color:rgba(225,225,225);">
+            <p>⌵ 下拉页面查看更多</p>
+        </div>
     </header>
 
-    <!-- ===== Content ===== -->
-    <main class="container">
-        <section class="card" id="card1">
+    <!-- ===== 卡片区块 (每个都有独立背景和边缘渐变) ===== -->
+    <section class="card1 snap-block">
+        <div class="block-content">
             <h2>
                 <span class="accent-line"></span>
                 流浪者，欢迎来到后室……
             </h2>
             <p>所谓后室，是一个脱离了你所熟知的“现实”的一片异常空间，以其独特、格外危险的环境、种种多变的威胁以及空荡诡异的阈限空间而闻名。不要被这里的任何假象所迷惑，这里不安全。</p>
             <p>你现在所处于的黄色房间，通常被称为“Level 0”。克服心中因为迷路产生的恐惧，这里虽然诡异，但并不算危险，规划好物资，不要惊慌。后室是由以无数不同形式，互相之间独立存在着的空间，“层级”组成的，我们对其进行了编号，例如你现在所在的 Level 0。不出意外，你接下来可能会来到的 Level 1 与 Level CN 0 都是上述层级沧海中的一粟。许多层级彼此之间联系较为密切，大致形成了一个树状网络，我们将每个主干上分出的“枝杈”称为层群。例如，Level CN 0 就归属于 CN 层群。这是一个新近发现的层群。根据数字越小往往混乱程度就越低的原则，我们正在比较并选出 CN 层群的层级顺序。如果你能为我们的数据库添砖加瓦，我们将感激不尽。</p>
-        </section>
+        </div>
+    </section>
 
-        <section class="card" id="card2">
+    <section class="card2 snap-block">
+        <div class="block-content">
             <h2>
                 <span class="accent-line"></span>
                 我们是谁？
@@ -616,16 +555,18 @@
             <p>我们是 M.E.G.，The Major Explorer Group（探索者集团）的简称。我们是一个由像你一样落入后室的流浪者们建立的公益组织，目前正在进行后室的探索、研究，同时也担当建立并维护社区的工作。我们正在努力为全体成员提供后室中绝无仅有的物质和精神享受，若咨询加入事宜，请至任意一个 M.E.G. 基地。</p>
             <p>不要太过担心迷路。只要不是遇到服务器全体维护或者是你正处于一个新层级，数据库的“Epitaph”系统都会自动帮助你定位自己所处于的层级和精度为五十米范围内的准确位置。请查询显示出的层级列表或 CN 层群层级列表来获得更远的信息。</p>
             <p>祝你好运！</p>
-        </section>
+        </div>
+    </section>
 
-        <section class="card" id="card3">
+    <section class="card3 snap-block">
+        <div class="block-content">
             <h2>
                 <span class="accent-line"></span>
                 什么是“后室中文数据库”？
             </h2>
             <p>“后室中文数据库”，即“Miraheze 后室中文 Wiki”，在 Miraheze 创建。后室中文数据库记载了很多关于后室的资料，可以帮助流浪者们在后室中生存下去。</p>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <!-- ===== Footer ===== -->
     <footer>
@@ -677,18 +618,9 @@
         gtag('config', 'G-20X3NQDCZE');
     </script>
 
-    <!-- Counter error fallback & 卡片淡入 -->
+    <!-- Counter error fallback -->
     <script>
         (function() {
-            // 卡片淡入效果
-            const cards = document.querySelectorAll('.card');
-            cards.forEach((card, index) => {
-                setTimeout(() => {
-                    card.classList.add('fade-in');
-                }, 120 + index * 180);
-            });
-
-            // statcounter 错误回退
             const checkImg = setInterval(function() {
                 const imgs = document.querySelectorAll('.statcounter img');
                 imgs.forEach(function(img) {
