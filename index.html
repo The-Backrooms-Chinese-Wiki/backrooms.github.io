@@ -2,228 +2,15 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-	<meta name="baidu-site-verification" content="codeva-GMY6wDOV7M" />
+    <meta name="baidu-site-verification" content="codeva-GMY6wDOV7M" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>后室中文数据库</title>
+    <title>后室中文数据库 · 暖黄浮动</title>
     <link rel="icon" href="https://static.wikitide.net/backroomszhwiki/thumb/1/16/SiteLogo.png/400px-SiteLogo.png">
-    <style>
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-      box-sizing: border-box;
-    }
 
-    h1 {
-      font-size: 2.5rem;
-      text-align: center;
-    }
-
-    p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-    }
-
-    img, video {
-      max-width: 100%;
-      height: auto;
-    }
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-
-      p {
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      p {
-        font-size: 0.9rem;
-      }
-    }
-        :root {
-            --main-color: #fefc88;
-            --accent-color: #d5f74b;
-            --text-color: #e0e0e0;
-        }
-
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
-            color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
-            min-height: 100vh;
-            position: relative;
-        }
-
-        /* 背景图片容器 */
-        #background {
-            position: fixed; /* 使用 fixed 定位 */
-            top: -10%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
-            background: url('https://static.wikitide.net/backroomszhwiki/4/40/IMG_0407.jpeg') no-repeat center center/cover;
-            z-index: -1;
-            will-change: transform;
-            filter: blur(2px);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            text-align: center;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.2);
-            position: relative; /* 确保内容在背景之上 */
-            z-index: 1;
-        }
-
-        .title {
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px var(--accent-color);
-            animation: flicker 3s infinite;
-        }
-
-        /* 导航栏美化 */
-        .nav {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 1rem;
-            border-bottom: 1px solid var(--accent-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: sticky; /* 导航栏固定在顶部 */
-            top: 0;
-            z-index: 2;
-        }
-
-        .nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            margin: 0 1rem;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .nav a::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: radial-gradient(circle, rgba(0, 204, 153, 0.3), transparent);
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.5s ease;
-            border-radius: 50%;
-        }
-
-        .nav a:hover {
-            color: var(--accent-color);
-            text-shadow: 0 0 8px var(--accent-color);
-            box-shadow: 0 0 15px var(--accent-color);
-            background: rgba(0, 0, 0, 0.5);
-            transform: scale(1.05);
-        }
-
-        .nav img {
-            height: 40px;
-            margin-right: 1rem;
-            vertical-align: middle;
-            filter: drop-shadow(0 0 5px var(--accent-color));
-        }
-
-        .portal-button {
-            background: transparent;
-            border: 2px solid var(--accent-color);
-            color: var(--text-color);
-            padding: 1rem 2rem;
-            margin: 2rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .portal-button:hover {
-            background: linear-gradient(45deg, var(--accent-color), #00aaff);
-            box-shadow: 0 0 20px var(--accent-color);
-            transform: scale(1.05);
-        }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
-        }
-
-        /* 确保footer没有背景图片 */
-        footer {
-            position: relative;
-            z-index: 1;
-            background: rgba(0, 0, 0, 0.7);
-            text-align: center;
-            padding: 1rem;
-            margin-top: 2rem;
-        }
-		  footer a {
-				color: white;
-		  }
-
-        /* 页面内容排版优化 */
-        .container p {
-            line-height: 1.8;
-            margin-bottom: 1.5rem;
-        }
-
-        .container h2 {
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-
-		.card {
-            width: 400px;
-            height: auto;
-            padding: 2rem;
-            border-radius: 1rem;
-        }
-​
-        .card-title {
-            margin-top: 0;
-            margin-bottom: .5rem;
-            font-size: 1.2rem;
-        }
-​
-        p, a {
-            font-size: 1rem;
-        }
-​
-        a {
-            color: #4d4ae8;
-            text-decoration: none;
-        }
-
-		.card {
-		    background: rgba(255, 255, 255, .7);
-            -webkit-backdrop-filter: blur(5px);
-            backdrop-filter: blur(5px);
-		}
-    </style>
-    <link rel="alternate" href="https://backrooms.miraheze.org" hreflang="en-us">
+    <!-- Open Graph -->
     <meta property="og:title" content="后室中文数据库">
     <meta property="og:url" content="https://wiki.backroomszh.org">
-    <meta property="og:description" content="如果你能看到这段文字,那么,欢迎来到后室。希望这里的资料能帮助你在后室之中生存。所谓后室,是一个脱离了你所熟知的“现实”的一片异常空间，以其独特、格外危险的环境、种种多变的威胁以及空荡诡异的阈限空间而闻名。不要被这里的任何假象所迷惑，这里不安全。">
+    <meta property="og:description" content="如果你能看到这段文字,那么,欢迎来到后室。希望这里的资料能帮助你在后室之中生存。">
     <meta property="og:image" content="https://static.wikitide.net/backroomszhwiki/thumb/1/16/SiteLogo.png/320px-SiteLogo.png">
     <meta property="og:image:alt" content="站标">
     <meta property="article:tag" content="backrooms,后室,中文,怪核,写作,后室中文维基,维基,wiki,数据库,百科,MediaWiki">
@@ -232,159 +19,694 @@
     <meta property="article:published_time" content="2025-02-04T10:57:59Z">
     <meta property="og:site_name" content="后室中文数据库">
     <meta property="og:type" content="website">
+    <link rel="alternate" href="https://backrooms.miraheze.org" hreflang="en-us">
+
+    <style>
+        /* ===== Reset & Base ===== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --yellow-primary: #d4a017;
+            --yellow-primary-hover: #b8891a;
+            --yellow-light: #fcf3cf;
+            --yellow-bg: #fffce8;
+            --yellow-surface: rgba(255, 250, 225, 0.78);
+            --yellow-card: rgba(255, 248, 228, 0.73);
+            --yellow-text: #3a3220;
+            --yellow-text-secondary: #5c5340;
+            --yellow-border: rgba(180, 150, 90, 0.18);
+            --yellow-shadow: 0 8px 32px rgba(160, 120, 40, 0.14);
+            --fluent-radius: 12px;
+            --fluent-blur: 20px;
+            --hero-overlay: rgba(255, 253, 238, 0.67);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+            background: var(--yellow-bg);
+            color: var(--yellow-text);
+            line-height: 1.7;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--yellow-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(140, 110, 60, 0.25);
+            border-radius: 99px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(140, 110, 60, 0.4);
+        }
+
+        /* ===== Navigation ===== */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+            padding: 0.7rem 1.5rem;
+            background: var(--yellow-surface);
+            backdrop-filter: blur(var(--fluent-blur));
+            -webkit-backdrop-filter: blur(var(--fluent-blur));
+            border-bottom: 1px solid var(--yellow-border);
+            flex-wrap: wrap;
+            transition: background 0.3s ease;
+        }
+
+        .nav-logo {
+            height: 34px;
+            margin-right: 0.75rem;
+            filter: drop-shadow(0 0 6px rgba(190, 155, 50, 0.2));
+            transition: transform 0.25s ease;
+            flex-shrink: 0;
+        }
+        .nav-logo:hover {
+            transform: scale(1.04);
+        }
+
+        .nav a {
+            color: var(--yellow-text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 1.2rem;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 470;
+            transition: all 0.25s ease;
+            letter-spacing: 0.01em;
+            position: relative;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--yellow-primary);
+            border-radius: 99px;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: #3a3020;
+            background: rgba(210, 170, 60, 0.15);
+        }
+        .nav a:hover::after {
+            width: 54%;
+        }
+
+        /* ===== Hero ===== */
+        .hero {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 5rem 2rem 4.5rem;
+            min-height: 70vh;
+            background:
+                var(--hero-overlay),
+                url('https://static.wikitide.net/backroomszhwiki/d/d5/Wallpaper.png') center center / cover no-repeat;
+            background-attachment: fixed;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 80%, rgba(215, 185, 80, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 770px;
+            animation: heroFadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-title {
+            font-size: clamp(2.8rem, 9vw, 5.2rem);
+            font-weight: 270;
+            letter-spacing: 0.02em;
+            color: #2c2418;
+            text-shadow: 0 2px 30px rgba(245, 235, 195, 0.5);
+            margin-bottom: 0.35rem;
+            line-height: 1.15;
+        }
+
+        .hero-title span {
+            font-weight: 570;
+            color: #b3891a;
+            text-shadow: 0 0 30px rgba(196, 156, 42, 0.2);
+        }
+
+        .hero-sub {
+            font-size: 1rem;
+            color: rgba(60, 50, 32, 0.55);
+            letter-spacing: 0.3em;
+            font-weight: 395;
+            margin-bottom: 1.8rem;
+            text-transform: uppercase;
+        }
+
+        .hero-quote {
+            font-size: 1.05rem;
+            color: rgba(50, 42, 28, 0.79);
+            max-width: 650px;
+            margin: 0 auto 2.4rem;
+            line-height: 1.8;
+            font-style: italic;
+            font-weight: 355;
+            text-shadow: 0 1px 20px rgba(255, 244, 211, 0.3);
+        }
+
+        .hero-quote i {
+            font-style: italic;
+        }
+
+        /* ===== Button ===== */
+        .btn-fluent {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--yellow-primary);
+            color: #2c2218;
+            border: none;
+            padding: 0.85rem 2.6rem;
+            border-radius: 999px;
+            font-size: 1.15rem;
+            font-weight: 595;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 24px rgba(194, 158, 46, 0.35);
+            text-decoration: none;
+            letter-spacing: 0.015em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-fluent::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 251, 206, 0.25) 0%, transparent 60%);
+            pointer-events: none;
+            border-radius: inherit;
+        }
+
+        .btn-fluent:hover {
+            background: var(--yellow-primary-hover);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 36px rgba(186, 152, 41, 0.47);
+            color: #1f1810;
+        }
+
+        .btn-fluent:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 2px 12px rgba(183, 149, 43, 0.3);
+        }
+
+        .btn-fluent svg {
+            width: 21px;
+            height: 21px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        /* ===== Container / Cards ===== */
+        .container {
+            max-width: 890px;
+            margin: 0 auto;
+            padding: 2.8rem 1.8rem 3.6rem;
+        }
+
+        .card {
+            background: var(--yellow-card);
+            backdrop-filter: blur(var(--fluent-blur));
+            -webkit-backdrop-filter: blur(var(--fluent-blur));
+            border: 1px solid var(--yellow-border);
+            border-radius: var(--fluent-radius);
+            padding: 2.2rem 2.4rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--yellow-shadow);
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.29, 1),
+                box-shadow 0.4s ease,
+                border-color 0.3s ease;
+            /* 初始可见，没有任何隐藏动画 */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 浮动悬停效果 —— 独立动画，不与初始状态冲突 */
+        .card:hover {
+            animation: cardFloat 2.2s ease-in-out infinite;
+            box-shadow: 0 18px 48px rgba(136, 104, 30, 0.22);
+            border-color: rgba(168, 134, 54, 0.38);
+        }
+
+        @keyframes cardFloat {
+            0% {
+                transform: translateY(-3px);
+            }
+            50% {
+                transform: translateY(-11px);
+            }
+            100% {
+                transform: translateY(-3px);
+            }
+        }
+
+        /* 页面加载后的淡入效果（通过 JS 添加类） */
+        .card.fade-in {
+            animation: cardEntry 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes cardEntry {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            font-weight: 475;
+            color: #2f281b;
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card h2 .accent-line {
+            display: inline-block;
+            width: 4px;
+            height: 26px;
+            background: var(--yellow-primary);
+            border-radius: 99px;
+            flex-shrink: 0;
+        }
+
+        .card p {
+            color: var(--yellow-text-secondary);
+            font-size: 1rem;
+            line-height: 1.84;
+            margin-bottom: 0.8rem;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--yellow-border);
+            margin: 2.4rem 0 2.8rem;
+            opacity: 0.5;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: var(--yellow-surface);
+            backdrop-filter: blur(var(--fluent-blur));
+            -webkit-backdrop-filter: blur(var(--fluent-blur));
+            border-top: 1px solid var(--yellow-border);
+            text-align: center;
+            padding: 2rem 1.5rem 2.2rem;
+            font-size: 0.885rem;
+            color: var(--yellow-text-secondary);
+            margin-top: 1rem;
+        }
+
+        footer a {
+            color: #9b7a2e;
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+        footer a:hover {
+            color: #6d551e;
+            text-decoration: underline;
+        }
+
+        footer .sep {
+            color: rgba(124, 102, 54, 0.2);
+            margin: 0 0.6rem;
+        }
+
+        footer .stats {
+            margin-top: 0.8rem;
+            font-size: 0.825rem;
+            opacity: 0.71;
+        }
+
+        footer iframe {
+            margin-top: 0.8rem;
+            border-radius: 6px;
+            opacity: 0.84;
+        }
+
+        /* ===== Hero animation ===== */
+        @keyframes heroFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.97);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .nav,
+        footer {
+            animation: fadeSlide 0.9s ease forwards;
+        }
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(-6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        footer {
+            animation-name: fadeSlideUp;
+        }
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 840px) {
+            .hero {
+                padding: 3.6rem 1.5rem 3.2rem;
+                min-height: 60vh;
+                background-attachment: scroll;
+            }
+            .hero-title {
+                font-size: clamp(2.2rem, 10vw, 3.6rem);
+            }
+            .hero-quote {
+                font-size: 0.96rem;
+            }
+            .btn-fluent {
+                padding: 0.7rem 2rem;
+                font-size: 1.05rem;
+            }
+            .container {
+                padding: 2rem 1.2rem 2.8rem;
+            }
+            .card {
+                padding: 1.6rem 1.6rem;
+            }
+            .card h2 {
+                font-size: 1.3rem;
+            }
+            .nav a {
+                padding: 0.3rem 0.9rem;
+                font-size: 0.855rem;
+            }
+            .nav-logo {
+                height: 27px;
+                margin-right: 0.4rem;
+            }
+            .card:hover {
+                animation: cardFloatMobile 2.2s ease-in-out infinite;
+            }
+            @keyframes cardFloatMobile {
+                0% {
+                    transform: translateY(-2px);
+                }
+                50% {
+                    transform: translateY(-8px);
+                }
+                100% {
+                    transform: translateY(-2px);
+                }
+            }
+        }
+
+        @media (max-width: 610px) {
+            .card:hover {
+                animation: cardFloatSmall 2.4s ease-in-out infinite;
+            }
+            @keyframes cardFloatSmall {
+                0% {
+                    transform: translateY(-1px);
+                }
+                50% {
+                    transform: translateY(-6px);
+                }
+                100% {
+                    transform: translateY(-1px);
+                }
+            }
+        }
+
+        @media (max-width: 490px) {
+            .hero {
+                padding: 2.8rem 1rem 2.6rem;
+                min-height: 52vh;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-sub {
+                font-size: 0.765rem;
+                letter-spacing: 0.2em;
+            }
+            .hero-quote {
+                font-size: 0.865rem;
+            }
+            .btn-fluent {
+                padding: 0.6rem 1.6rem;
+                font-size: 0.945rem;
+                width: 100%;
+                justify-content: center;
+            }
+            .nav {
+                gap: 0.1rem;
+                padding: 0.45rem 0.6rem;
+            }
+            .nav a {
+                padding: 0.23rem 0.65rem;
+                font-size: 0.755rem;
+            }
+            .nav-logo {
+                height: 22px;
+                margin-right: 0.2rem;
+            }
+            .container {
+                padding: 1.2rem 0.8rem 2rem;
+            }
+            .card {
+                padding: 1.2rem 1.2rem;
+                border-radius: 10px;
+            }
+            .card h2 {
+                font-size: 1.1rem;
+            }
+            .card p {
+                font-size: 0.905rem;
+            }
+            footer {
+                font-size: 0.745rem;
+                padding: 1.2rem 0.8rem;
+            }
+            .card:hover {
+                animation: cardFloatSmall 2.4s ease-in-out infinite;
+            }
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
 </head>
 <body>
-    
 
-    <!-- 背景图片容器 -->
-    <div id="background"></div>
+    <!-- ===== Navigation ===== -->
+    <nav class="nav" role="navigation" aria-label="主导航">
+        <img class="nav-logo"
+        src="https://static.wikitide.net/backroomszhwiki/thumb/1/16/SiteLogo.png/400px-SiteLogo.png"
+        alt="后室中文数据库站标">
+        <a href="https://wiki.backroomszh.org/%E5%B1%82%E7%BA%A7%E5%88%97%E8%A1%A8" target="_blank">层级</a>
+        <a href="https://wiki.backroomszh.org/%E5%AE%9E%E4%BD%93%E5%88%97%E8%A1%A8" target="_blank">实体</a>
+        <a href="https://wiki.backroomszh.org/%E7%89%A9%E5%93%81%E5%88%97%E8%A1%A8" target="_blank">物品</a>
+        <a href="https://wiki.backroomszh.org/%E6%95%88%E5%BA%94%E5%88%97%E8%A1%A8" target="_blank">效应</a>
+    </nav>
 
-    <nav class="nav">
-        <img src="https://static.wikitide.net/backroomszhwiki/thumb/1/16/SiteLogo.png/400px-SiteLogo.png" 
-             style="height: 40px; margin-right: 1rem; vertical-align: middle;">
-        <a href="https://wiki.backroomszh.org/层级列表" target="_blank">层级</a>
-        <a href="https://wiki.backroomszh.org/实体列表">实体</a>
-        <a href="https://wiki.backroomszh.org/物品列表">物品</a>
-        <a href="https://wiki.backroomszh.org/效应列表">效应</a>
-    </nav><br><br>
+    <!-- ===== Hero ===== -->
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">The <span>Backrooms</span></h1>
+            <p class="hero-sub">你曾经来过这里</p>
+            <p class="hero-quote">
+                <i>“假如你在异常的地方从现实中脱离，你最后会来到后室。这里除了无尽、空荡的黄色走廊、阴暗的黄色荧光灯光、坑坑洼洼的潮湿地毯和日光灯那令人发狂的嗡嗡声以外几乎什么也没有。如果你听见周围有什么响动，愿神保佑你吧，因为它一定也发现了你……”</i>
+            </p>
+            <a href="https://wiki.backroomszh.org" class="btn-fluent" aria-label="进入后室中文数据库">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm-1-13v8l6-4-6-4z"/></svg>
+                进入数据库
+            </a>
+        </div>
+    </header>
 
-    <div class="container">
-        <h1 class="title">The Backrooms</h1>
-        <small>你曾经来过这里</small><br>
-        
-        <p><i>“假如你在异常的地方从现实中脱离，你最后会来到后室。这里除了无尽、空荡的黄色走廊、阴暗的黄色荧光灯光、坑坑洼洼的潮湿地毯和日光灯那令人发狂的嗡嗡声以外几乎什么也没有。如果你听见周围有什么响动，愿神保佑你吧，因为它一定也发现了你……”</i></p>
-        
-        <big>
-            <a href="https://wiki.backroomszh.org"><button class="portal-button"><big> 进入数据库 </big></button></a>
-        </big>
-<hr>
-        <section id="about">
-            <h2>流浪者，欢迎来到后室……</h2>
-            <p>所谓后室,是一个脱离了你所熟知的“现实”的一片异常空间，以其独特、格外危险的环境、种种多变的威胁以及空荡诡异的阈限空间而闻名。不要被这里的任何假象所迷惑，这里不安全。<br><br>
-
-你现在所处于的黄色房间,通常被称为“Level 0”。克服心中因为迷路产生的恐惧,这里虽然诡异,但并不算危险,规划好物资,不要惊慌。后室是由以无数不同形式,互相之间独立存在着的空间,“层级”组成的,我们对其进行了编号,例如你现在所在的Level 0。不出意外,你接下来可能会来到的Level 1与Level CN 0都是上述层级沧海中的一粟。许多层级彼此之间联系较为密切,大致形成了一个树状网络,我们将每个主干上分出的“枝杈”称为层群。例如,Level CN 0就归属于CN层群。这是一个新近发现的层群。根据数字越小往往混乱程度就越低的原则,我们正在比较并选出CN层群的层级顺序。如果你能为我们的数据库添砖加瓦,我们将感激不尽。</p><br>
-            <h2>我们是谁？</h2>
-            <p>我们是M.E.G.,The Major Explorer Group(探索者集团)的简称。我们一个由像你一样落入后室的流浪者们建立的公益组织,目前正在进行后室的探索、研究,同时也担当建立并维护社区的工作。我们正在努力为全体成员提供后室中绝无仅有的物质和精神享受,若资询加入事宜,请至任意一个M.E.G.基地。<br><br>
-
-不要太过担心迷路。只要不是遇到服务器全体维护或者是你正处于一个新层级,数据库的“Epitaph”系统都会自动帮助你定位自己所处于的层级和精度为五十米范围内的准确位置。请查询显示出的层级列表或CN层群层级列表来获得更远的信息。<br><br>
-
-祝你好运!</p>
-
-	    <h2>什么是“后室中文数据库”？</h2>
-	    <p>“后室中文数据库”，即“Miraheze后室中文Wiki”，在Miraheze创建。后室中文数据库记载了很多关于后室的资料，可以帮助流浪者们在后室中生存下去。</p>
+    <!-- ===== Content ===== -->
+    <main class="container">
+        <section class="card" id="card1">
+            <h2>
+                <span class="accent-line"></span>
+                流浪者，欢迎来到后室……
+            </h2>
+            <p>所谓后室，是一个脱离了你所熟知的“现实”的一片异常空间，以其独特、格外危险的环境、种种多变的威胁以及空荡诡异的阈限空间而闻名。不要被这里的任何假象所迷惑，这里不安全。</p>
+            <p>你现在所处于的黄色房间，通常被称为“Level 0”。克服心中因为迷路产生的恐惧，这里虽然诡异，但并不算危险，规划好物资，不要惊慌。后室是由以无数不同形式，互相之间独立存在着的空间，“层级”组成的，我们对其进行了编号，例如你现在所在的 Level 0。不出意外，你接下来可能会来到的 Level 1 与 Level CN 0 都是上述层级沧海中的一粟。许多层级彼此之间联系较为密切，大致形成了一个树状网络，我们将每个主干上分出的“枝杈”称为层群。例如，Level CN 0 就归属于 CN 层群。这是一个新近发现的层群。根据数字越小往往混乱程度就越低的原则，我们正在比较并选出 CN 层群的层级顺序。如果你能为我们的数据库添砖加瓦，我们将感激不尽。</p>
         </section>
-    </div>
 
+        <section class="card" id="card2">
+            <h2>
+                <span class="accent-line"></span>
+                我们是谁？
+            </h2>
+            <p>我们是 M.E.G.，The Major Explorer Group（探索者集团）的简称。我们是一个由像你一样落入后室的流浪者们建立的公益组织，目前正在进行后室的探索、研究，同时也担当建立并维护社区的工作。我们正在努力为全体成员提供后室中绝无仅有的物质和精神享受，若咨询加入事宜，请至任意一个 M.E.G. 基地。</p>
+            <p>不要太过担心迷路。只要不是遇到服务器全体维护或者是你正处于一个新层级，数据库的“Epitaph”系统都会自动帮助你定位自己所处于的层级和精度为五十米范围内的准确位置。请查询显示出的层级列表或 CN 层群层级列表来获得更远的信息。</p>
+            <p>祝你好运！</p>
+        </section>
+
+        <section class="card" id="card3">
+            <h2>
+                <span class="accent-line"></span>
+                什么是“后室中文数据库”？
+            </h2>
+            <p>“后室中文数据库”，即“Miraheze 后室中文 Wiki”，在 Miraheze 创建。后室中文数据库记载了很多关于后室的资料，可以帮助流浪者们在后室中生存下去。</p>
+        </section>
+    </main>
+
+    <!-- ===== Footer ===== -->
     <footer>
-<small>
-            <a href="https://wiki.backroomszh.org/Project:免责声明" target="_blank">免责声明</a> |
-            <a href="mailto:support@backroomszh.org">站务邮箱</a><br>
-	   本页面加载次数共 <!-- Default Statcounter code for 后室中文数据库
-https://backroomszh.org -->
-<script type="text/javascript">
-var sc_project=13087258; 
-var sc_invisible=0; 
-var sc_security="f5edb82b"; 
-var sc_text=2; 
-var scJsHost = "https://";
-document.write("<sc"+"ript type='text/javascript' src='" +
-scJsHost+
-"statcounter.com/counter/counter.js'></"+"script>");
-</script>
-<noscript><div class="statcounter"><a title="Web Analytics
-Made Easy - Statcounter" href="https://statcounter.com/"
-target="_blank"><img class="statcounter"
-src="https://c.statcounter.com/13087258/0/f5edb82b/0/"
-alt="Web Analytics Made Easy - Statcounter"
-referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
-<!-- End of Statcounter Code -->次，
-	
-	本站稳定运行了
-        <script>
-        var webstar = new Date("8/31/2024");
-        var webnow = new Date();
-        var dotime = webnow.getTime() - webstar.getTime();
-        var donow = Math.floor(dotime / (1000 * 60 * 60 * 24));
-        document.write(+donow)
-        </script>
-        天<br>
+        <div>
+            <a href="https://wiki.backroomszh.org/Project:%E5%85%8D%E8%B4%A3%E5%A3%B0%E6%98%8E" target="_blank">免责声明</a>
+            <span class="sep">|</span>
+            <a href="mailto:support@backroomszh.org">站务邮箱</a>
+        </div>
 
-	
-<iframe 
-  src="https://backroomszh.instatus.com/embed-status/d998e62e/dark-md" 
-  width="230" 
-  height="61" 
-  frameBorder="0" 
-  scrolling="no" 
-  style="border: none;"
->
-</iframe>
-	
+        <div class="stats">
+            本页面加载次数共
+            <script type="text/javascript">
+                var sc_project = 13087258;
+                var sc_invisible = 0;
+                var sc_security = "f5edb82b";
+                var sc_text = 2;
+                var scJsHost = "https://";
+                document.write("<sc" + "ript type='text/javascript' src='" + scJsHost +
+                    "statcounter.com/counter/counter.js'></" + "script>");
+            </script>
+            <noscript>
+                <div class="statcounter">
+                    <a title="Web Analytics Made Easy - Statcounter" href="https://statcounter.com/" target="_blank">
+                        <img class="statcounter" src="https://c.statcounter.com/13087258/0/f5edb82b/0/" alt="Statcounter" referrerPolicy="no-referrer-when-downgrade">
+                    </a>
+                </div>
+            </noscript>
+            次，
+            本站稳定运行了
+            <script>
+                var webstar = new Date("8/31/2024");
+                var webnow = new Date();
+                var dotime = webnow.getTime() - webstar.getTime();
+                var donow = Math.floor(dotime / (1000 * 60 * 60 * 24));
+                document.write(donow);
+            </script>
+            天
+        </div>
+
+        <iframe src="https://backroomszh.instatus.com/embed-status/d998e62e/dark-md" width="230" height="61" frameBorder="0" scrolling="no" style="border: none; margin-top: 0.6rem;" title="服务状态"></iframe>
     </footer>
 
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-20X3NQDCZE"></script>
     <script>
-        // 页面加载完成后初始化背景动画
-        document.addEventListener('DOMContentLoaded', function () {
-            const elements = document.querySelectorAll('h1, h2, p, a, button, small, .nav a, .container, footer');
-            elements.forEach((el, index) => {
-                el.style.opacity = 0;
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-20X3NQDCZE');
+    </script>
+
+    <!-- Counter error fallback & 卡片淡入 -->
+    <script>
+        (function() {
+            // 卡片淡入效果
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
                 setTimeout(() => {
-                    el.style.transition = `opacity 2s ease-in ${index * 0.2}s`;
-                    el.style.opacity = 1;
-                }, 50);
+                    card.classList.add('fade-in');
+                }, 120 + index * 180);
             });
 
-            // 背景图片反弹动画
-            const background = document.getElementById('background');
-            let posX = 0;
-            let posY = 0;
-            let speedX = 0.1;
-            let speedY = 0.1;
-            const maxX = 30;
-            const maxY = 30;
-
-            function animateBackground() {
-                posX += speedX;
-                posY += speedY;
-
-                if (posX > maxX || posX < -maxX) {
-                    speedX = -speedX;
-                }
-                if (posY > maxY || posY < -maxY) {
-                    speedY = -speedY;
-                }
-
-                background.style.transform = `translate(${posX}px, ${posY}px)`;
-                requestAnimationFrame(animateBackground);
-            }
-
-            animateBackground();
-</script>
-<script>
-	    // 计数器调整
-const img = document.getElementById('Counter');
-
-  img.onerror = function() {
-    // 创建一个文本节点
-    const textNode = document.createTextNode('数据加载失败，请刷新页面后重试');
-    
-    // 获取父元素
-    const parent = img.parentElement;
-    
-    // 用文本节点替换 <img> 标签
-    parent.replaceChild(textNode, img);
-  };
+            // statcounter 错误回退
+            const checkImg = setInterval(function() {
+                const imgs = document.querySelectorAll('.statcounter img');
+                imgs.forEach(function(img) {
+                    img.onerror = function() {
+                        const parent = this.parentElement;
+                        if (parent && !parent.querySelector('.fallback-msg')) {
+                            const msg = document.createElement('span');
+                            msg.className = 'fallback-msg';
+                            msg.style.color = '#8a7a5a';
+                            msg.textContent = '数据加载失败，请刷新页面后重试';
+                            parent.appendChild(msg);
+                            this.style.display = 'none';
+                        }
+                    };
+                });
+            }, 700);
+        })();
     </script>
-	<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-20X3NQDCZE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-20X3NQDCZE');
-
-	
-</script>
 </body>
 </html>
