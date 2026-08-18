@@ -4,14 +4,15 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
 
 
 <url>
-  <loc>https://backroomszh.org/</loc>
-  <loc>https://wiki.backroomszh.org/</loc>
+  <loc>https://www.backroomszh.org/</loc>
+  <loc>https://backroomszh.miraheze.org/</loc>
   <loc>https://discuss.backroomszh.org/</loc>
-  <lastmod>2025-02-14T12:04:30+00:00</lastmod>
+  <loc>https://www.backroomszh.org/category_creator</loc>
+  <lastmod>2026-08-18T12:04:30+00:00</lastmod>
 </url>
 
 
