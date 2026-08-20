@@ -413,55 +413,26 @@
         /* 内容层 */
         .card-content {
             position: absolute;
+            z-index: 2;
+            width: 100%;
             max-width: 780px;
             padding: 2.8rem 2.5rem;
+            will-change: transform, filter;
         }
 
-        /* 右下对齐（第一张） */
-        .card-content--right-bottom {
-            bottom: 40%;
-            right: 5%;
-            text-align: right;
-        }
-
-        /* 左上对齐（第二张） */
-        .card-content--left-top {
-            top: 40%;
-            left: 5%;
-            text-align: left;
-        }
-
-        /* 左侧对齐（第三张） */
-        .card-content--left {
-            left: 5%;
-            top: 50%;
-            transform: translateY(-50%);
-            text-align: left;
-        }
-
-        /* 标题基础样式：flex 容器 */
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
+        .card-content h2 {
             font-size: 1.7rem;
             font-weight: 520;
             color: #e7e7e7;
             text-shadow: 2px 2px rgba(30, 20, 5, 0.15);
             margin-bottom: 1rem;
             letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
         }
 
-        /* 右对齐标题：让标题作为行内 flex，随父级 text-align 右对齐 */
-        .card-content--right-bottom .card-title {
-            display: inline-flex;
-            width: auto;
-            margin-left: 0;
-            justify-content: flex-end;
-        }
-
-        /* 装饰线保持原样 */
-        .accent-line {
+        .card-content h2 .accent-line {
             display: inline-block;
             width: 4px;
             height: 1.4rem;
@@ -477,6 +448,10 @@
             color: #e7e7e7;
             line-height: 1.8;
             margin-bottom: 0.8rem;
+        }
+
+        .card-content p:last-child {
+            margin-bottom: 0;
         }
 
         hr {
@@ -564,12 +539,6 @@
             animation: pulse 1.5s ease-in-out infinite;
         }
 
-        #cta-btn,
-        #site-footer {
-            opacity: 0;
-            visibility: hidden;
-        }
-
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.4; }
@@ -603,36 +572,13 @@
                 padding: 0.7rem 2rem;
                 font-size: 1.05rem;
             }
-            .card {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
             .card-content {
-                position: relative !important;
-                top: auto !important;
-                bottom: auto !important;
-                left: auto !important;
-                right: auto !important;
-                /* 完全删除 transform 属性，让 GSAP 自由控制 */
-                width: min(92%, 720px) !important;
-                max-width: 92% !important;
-                max-height: 78vh !important;
-                padding: 2rem 1.6rem !important;
-                margin: 0 !important;
-                border-radius: 14px !important;
-                background: rgba(20, 15, 5, 0.28) !important;
-                backdrop-filter: blur(6px) !important;
-                -webkit-backdrop-filter: blur(6px) !important;
+                padding: 2rem 1.6rem;
+                margin: 0 1rem;
+                border-radius: 14px;
             }
-            .card-title {
-                justify-content: center !important;
-                text-align: center !important;
-                display: flex !important;
-                width: 100% !important;
-            }
-            .card-title--right .accent-line {
-                order: -1;
+            .card-content h2 {
+                font-size: 1.3rem;
             }
             .nav {
                 top: 1rem;
@@ -666,11 +612,8 @@
                 margin-right: 0.3rem;
             }
             .card-content {
-                padding: 1.6rem 1.3rem !important;
-                width: 94% !important;
-                max-width: 94% !important;
-                max-height: 76vh !important;
-                border-radius: 12px !important;
+                padding: 1.6rem 1.3rem;
+                border-radius: 12px;
             }
             .card-content h2 {
                 font-size: 1.2rem;
@@ -722,11 +665,9 @@
                 margin-right: 0.2rem;
             }
             .card-content {
-                padding: 1.2rem 1rem !important;
-                width: 96% !important;
-                max-width: 96% !important;
-                max-height: 72vh !important;
-                border-radius: 10px !important;
+                padding: 1.2rem 1rem;
+                border-radius: 10px;
+                margin: 0 0.8rem;
             }
             .card-content h2 {
                 font-size: 1.1rem;
@@ -803,9 +744,9 @@
     <div class="content">
         <!-- 第一张卡片 -->
         <section class="card" id="card1">
-            <div class="card-bg" style="background-image: url('images/Level_0.jpeg');"></div>
-            <div class="card-content card-content--right-bottom">
-                <h2 class="card-title card-title--right">流浪者，欢迎来到后室……<span class="accent-line"></span></h2>
+            <div class="card-bg" style="background-image: url('/images/Level_0.jpeg');"></div>
+            <div class="card-content" style="position:absolute;bottom:40%;right:5%;text-align:right;">
+                <h2 style="float: right;">流浪者，欢迎来到后室……<span class="accent-line"></span></h2><br><br>
                 <p>所谓后室，是一个脱离了你所熟知的“现实”的一片异常空间，以其独特、格外危险的环境、种种多变的威胁以及空荡诡异的阈限空间而闻名。不要被这里的任何假象所迷惑，这里不安全。</p>
                 <p>你现在所处于的黄色房间，通常被称为“Level 0”。克服心中因为迷路产生的恐惧，这里虽然诡异，但并不算危险，规划好物资，不要惊慌。后室是由以无数不同形式，互相之间独立存在着的空间，“层级”组成的，我们对其进行了编号，例如你现在所在的 Level 0。不出意外，你接下来可能会来到的 Level 1 与 Level CN 0 都是上述层级沧海中的一粟。许多层级彼此之间联系较为密切，大致形成了一个树状网络，我们将每个主干上分出的“枝杈”称为层群。例如，Level CN 0 就归属于 CN 层群。这是一个新近发现的层群。根据数字越小往往混乱程度就越低的原则，我们正在比较并选出 CN 层群的层级顺序。如果你能为我们的数据库添砖加瓦，我们将感激不尽。</p>
             </div>
@@ -813,9 +754,9 @@
 
         <!-- 第二张卡片 -->
         <section class="card" id="card2">
-            <div class="card-bg" style="background-image: url('images/Level_1.jpg');"></div>
-            <div class="card-content card-content--left-top">
-                <h2 class="card-title"><span class="accent-line"></span>我们是谁？</h2>
+            <div class="card-bg" style="background-image: url('/images/Level_1.jpg');"></div>
+            <div class="card-content" style="top:40%;left:5%;">
+                <h2><span class="accent-line"></span>我们是谁？</h2>
                 <p>我们是 M.E.G.，The Major Explorer Group（探索者集团）的简称。我们是一个由像你一样落入后室的流浪者们建立的公益组织，目前正在进行后室的探索、研究，同时也担当建立并维护社区的工作。我们正在努力为全体成员提供后室中绝无仅有的物质和精神享受，若咨询加入事宜，请至任意一个 M.E.G. 基地。</p>
                 <p>不要太过担心迷路。只要不是遇到服务器全体维护或者是你正处于一个新层级，数据库的“Epitaph”系统都会自动帮助你定位自己所处于的层级和精度为五十米范围内的准确位置。请查询显示出的层级列表或 CN 层群层级列表来获得更远的信息。</p>
                 <p>祝你好运！</p>
@@ -824,9 +765,9 @@
 
         <!-- 第三张卡片 -->
         <section class="card" id="card3">
-            <div class="card-bg" style="background-image: url('images/Level_37.jpeg');"></div>
-            <div class="card-content card-content--left">
-                <h2 class="card-title"><span class="accent-line"></span>什么是“后室中文数据库”？</h2>
+            <div class="card-bg" style="background-image: url('/images/Level_37.jpeg');"></div>
+            <div class="card-content" style="left:5%;">
+                <h2><span class="accent-line"></span>什么是“后室中文数据库”？</h2>
                 <p>“后室中文数据库”，即“Miraheze 后室中文 Wiki”，在 Miraheze 创建。后室中文数据库记载了很多关于后室的资料，可以帮助流浪者们在后室中生存下去。</p>
             </div>
         </section>
@@ -916,16 +857,12 @@
     </script>
 
     <script>
-        // ===== 禁用浏览器默认滚动恢复 =====
-        if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'manual';
-        }
-
         gsap.registerPlugin(ScrollTrigger);
 
         const cards = gsap.utils.toArray('.card');
         const totalCards = cards.length;
 
+        // ===== CTA 按钮切换逻辑 =====
         const ctaBtn = document.getElementById('cta-btn');
         const siteFooter = document.getElementById('site-footer');
         let currentVisibilityState = 0;
@@ -933,6 +870,7 @@
         function setVisibility(state) {
             if (state === currentVisibilityState) return;
             currentVisibilityState = state;
+
             if (state === 0) {
                 gsap.to([ctaBtn, siteFooter], { autoAlpha: 0, duration: 0.6, ease: 'power2.out' });
             } else {
@@ -940,130 +878,235 @@
             }
         }
 
+        // 初始化：按钮隐藏
         gsap.set([ctaBtn, siteFooter], { autoAlpha: 0 });
 
-        // ===== 初始化动画 =====
-        function initAnimation() {
-            const isDesktop = window.innerWidth >= 841;
-            const params = isDesktop ? {
-                bgScaleActive: 1.2, bgScaleIdle: 1.4, bgYIdle: 70, bgBlurIdle: 40,
-                bgBrightnessIdle: 0.15, contentYIdle: 90, contentBlurIdle: 35,
-                scrollDuration: 100, contentDuration: 0.8, bgDuration: 1.6,
-                nextContentDuration: 0.9, nextBgDuration: 1.8, scrub: 1.2
-            } : {
-                bgScaleActive: 1.15, bgScaleIdle: 1.3, bgYIdle: 40, bgBlurIdle: 30,
-                bgBrightnessIdle: 0.2, contentYIdle: 60, contentBlurIdle: 25,
-                scrollDuration: 90, contentDuration: 0.6, bgDuration: 1.2,
-                nextContentDuration: 0.7, nextBgDuration: 1.4, scrub: 1
+        // 使用 matchMedia 针对桌面端和移动端分别设置动画
+        const mm = gsap.matchMedia();
+
+        mm.add("(min-width: 841px)", () => {
+            // 桌面端参数
+            const bgScaleActive = 1.2;      // 活跃卡片背景缩放
+            const bgScaleIdle = 1.4;        // 非活跃卡片背景缩放（大位移余量）
+            const bgYIdle = 70;             // 非活跃背景位移（px）
+            const bgYActive = 0;
+            const bgBlurIdle = 40;          // 背景模糊（px）
+            const bgBrightnessIdle = 0.15;  // 背景亮度
+            const contentYIdle = 90;        // 内容位移（px）
+            const contentYActive = 0;
+            const contentBlurIdle = 35;     // 内容模糊（px）
+
+            // 初始化所有卡片状态
+            cards.forEach((card, i) => {
+                const bg = card.querySelector('.card-bg');
+                const contentEls = card.querySelectorAll('.card-content > *');
+
+                gsap.set(card, { zIndex: i === 0 ? 1 : 0, opacity: 1, clipPath: 'none', scale: 1 });
+
+                if (i === 0) {
+                    gsap.set(bg, {
+                        filter: `brightness(1) blur(0px)`,
+                        y: bgYActive,
+                        scale: bgScaleActive
+                    });
+                    gsap.set(contentEls, {
+                        filter: 'blur(0px)',
+                        y: contentYActive
+                    });
+                } else {
+                    gsap.set(bg, {
+                        filter: `brightness(${bgBrightnessIdle}) blur(${bgBlurIdle}px)`,
+                        y: bgYIdle,
+                        scale: bgScaleIdle
+                    });
+                    gsap.set(contentEls, {
+                        filter: `blur(${contentBlurIdle}px)`,
+                        y: contentYIdle
+                    });
+                }
+            });
+
+            // 构建时间轴
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: '.content',
+                    start: 'top top',
+                    end: `+=${totalCards * 100}%`,
+                    scrub: 1.2,
+                    pin: true,
+                    anticipatePin: 1,
+                    markers: false,
+                }
+            });
+
+            // 起始处确保按钮隐藏
+            tl.call(() => setVisibility(0), [], 0);
+
+            // 空过渡，确保首屏稳定
+            tl.to({}, { duration: 0.7 });
+
+            for (let i = 0; i < totalCards - 1; i++) {
+                const current = cards[i];
+                const next = cards[i + 1];
+
+                const currentBg = current.querySelector('.card-bg');
+                const nextBg = next.querySelector('.card-bg');
+                const currentContent = current.querySelectorAll('.card-content > *');
+                const nextContent = next.querySelectorAll('.card-content > *');
+
+                // 当前卡片内容向上模糊消失
+                tl.to(currentContent, {
+                    y: -contentYIdle,
+                    filter: `blur(${contentBlurIdle}px)`,
+                    duration: 0.8,
+                    stagger: 0.06,
+                    ease: 'power1.inOut'
+                })
+
+                // 当前卡片背景模糊、变暗、位移
+                .to(currentBg, {
+                    filter: `brightness(${bgBrightnessIdle}) blur(${bgBlurIdle}px)`,
+                    y: -bgYIdle,
+                    scale: bgScaleIdle,
+                    duration: 1.6,
+                    ease: 'power1.inOut'
+                }, '<')
+
+                // 切换 z-index
+                .to(current, { zIndex: 0, duration: 0.1 }, '<0.4')
+                .to(next, { zIndex: 1, duration: 0.1 }, '<')
+
+                // 下一张卡片背景从模糊变清晰，同时位移归零、缩放调整
+                .to(nextBg, {
+                    filter: 'brightness(1) blur(0px)',
+                    y: bgYActive,
+                    scale: bgScaleActive,
+                    duration: 1.8,
+                    ease: 'power2.out'
+                }, '<')
+
+                // 下一张卡片内容从模糊位移变清晰
+                .to(nextContent, {
+                    filter: 'blur(0px)',
+                    y: contentYActive,
+                    duration: 0.9,
+                    stagger: 0.1,
+                    ease: 'power2.out'
+                }, '<0.25');
+
+                // 当第一张卡片过渡到第二张卡片完成后，显示按钮
+                if (i === 0) {
+                    tl.call(() => setVisibility(1));
+                }
+            }
+
+            tl.to({}, { duration: 0.5 });
+
+            // 清理函数（可选）
+            return () => {
+                tl.scrollTrigger.kill();
+                tl.kill();
             };
+        });
+
+        mm.add("(max-width: 840px)", () => {
+            // 移动端参数（稍小但仍夸张）
+            const bgScaleActive = 1.15;
+            const bgScaleIdle = 1.3;
+            const bgYIdle = 40;
+            const bgYActive = 0;
+            const bgBlurIdle = 30;
+            const bgBrightnessIdle = 0.2;
+            const contentYIdle = 60;
+            const contentYActive = 0;
+            const contentBlurIdle = 25;
 
             cards.forEach((card, i) => {
                 const bg = card.querySelector('.card-bg');
                 const contentEls = card.querySelectorAll('.card-content > *');
                 gsap.set(card, { zIndex: i === 0 ? 1 : 0, opacity: 1, clipPath: 'none', scale: 1 });
                 if (i === 0) {
-                    gsap.set(bg, { filter: 'brightness(1) blur(0px)', y: 0, scale: params.bgScaleActive });
+                    gsap.set(bg, { filter: 'brightness(1) blur(0px)', y: 0, scale: bgScaleActive });
                     gsap.set(contentEls, { filter: 'blur(0px)', y: 0 });
                 } else {
                     gsap.set(bg, {
-                        filter: `brightness(${params.bgBrightnessIdle}) blur(${params.bgBlurIdle}px)`,
-                        y: params.bgYIdle, scale: params.bgScaleIdle
+                        filter: `brightness(${bgBrightnessIdle}) blur(${bgBlurIdle}px)`,
+                        y: bgYIdle,
+                        scale: bgScaleIdle
                     });
                     gsap.set(contentEls, {
-                        filter: `blur(${params.contentBlurIdle}px)`, y: params.contentYIdle
+                        filter: `blur(${contentBlurIdle}px)`,
+                        y: contentYIdle
                     });
                 }
             });
 
-            const tl = gsap.timeline({
+            const tlMobile = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.content',
                     start: 'top top',
-                    end: `+=${totalCards * params.scrollDuration}%`,
-                    scrub: params.scrub,
+                    end: `+=${totalCards * 90}%`,
+                    scrub: 1,
                     pin: true,
                     anticipatePin: 1,
                 }
             });
 
-            tl.call(() => setVisibility(0), [], 0);
-            tl.to({}, { duration: isDesktop ? 0.7 : 0.6 });
+        // 起始处确保按钮隐藏
+        tlMobile.call(() => setVisibility(0), [], 0);
 
+            tlMobile.to({}, { duration: 0.6 });
             for (let i = 0; i < totalCards - 1; i++) {
-                const current = cards[i];
-                const next = cards[i + 1];
-                const currentBg = current.querySelector('.card-bg');
-                const nextBg = next.querySelector('.card-bg');
-                const currentContent = current.querySelectorAll('.card-content > *');
-                const nextContent = next.querySelectorAll('.card-content > *');
+                const cur = cards[i];
+                const nxt = cards[i + 1];
+                const curBg = cur.querySelector('.card-bg');
+                const nxtBg = nxt.querySelector('.card-bg');
+                const curContent = cur.querySelectorAll('.card-content > *');
+                const nxtContent = nxt.querySelectorAll('.card-content > *');
 
-                tl.to(currentContent, {
-                    y: -params.contentYIdle,
-                    filter: `blur(${params.contentBlurIdle}px)`,
-                    duration: params.contentDuration,
-                    stagger: isDesktop ? 0.06 : 0.04,
+                tlMobile.to(curContent, {
+                    y: -contentYIdle,
+                    filter: `blur(${contentBlurIdle}px)`,
+                    duration: 0.6,
+                    stagger: 0.04,
                     ease: 'power1.inOut'
                 })
-                .to(currentBg, {
-                    filter: `brightness(${params.bgBrightnessIdle}) blur(${params.bgBlurIdle}px)`,
-                    y: -params.bgYIdle, scale: params.bgScaleIdle,
-                    duration: params.bgDuration, ease: 'power1.inOut'
+                .to(curBg, {
+                    filter: `brightness(${bgBrightnessIdle}) blur(${bgBlurIdle}px)`,
+                    y: -bgYIdle,
+                    scale: bgScaleIdle,
+                    duration: 1.2,
+                    ease: 'power1.inOut'
                 }, '<')
-                .to(current, { zIndex: 0, duration: 0.1 }, isDesktop ? '<0.4' : '<0.3')
-                .to(next, { zIndex: 1, duration: 0.1 }, '<')
-                .to(nextBg, {
-                    filter: 'brightness(1) blur(0px)', y: 0, scale: params.bgScaleActive,
-                    duration: params.nextBgDuration, ease: 'power2.out'
-                }, '<')
-                .to(nextContent, {
-                    filter: 'blur(0px)', y: 0,
-                    duration: params.nextContentDuration,
-                    stagger: isDesktop ? 0.1 : 0.08,
+                .to(cur, { zIndex: 0, duration: 0.05 }, '<0.3')
+                .to(nxt, { zIndex: 1, duration: 0.05 }, '<')
+                .to(nxtBg, {
+                    filter: 'brightness(1) blur(0px)',
+                    y: 0,
+                    scale: bgScaleActive,
+                    duration: 1.4,
                     ease: 'power2.out'
-                }, isDesktop ? '<0.25' : '<0.2');
+                }, '<')
+                .to(nxtContent, {
+                    filter: 'blur(0px)',
+                    y: 0,
+                    duration: 0.7,
+                    stagger: 0.08,
+                    ease: 'power2.out'
+                }, '<0.2');
 
-                if (i === 0) tl.call(() => setVisibility(1));
+                // 当第一张卡片过渡到第二张卡片完成后，显示按钮
+                if (i === 0) {
+                    tlMobile.call(() => setVisibility(1));
+                }
             }
+            tlMobile.to({}, { duration: 0.4 });
 
-            tl.to({}, { duration: isDesktop ? 0.5 : 0.4 });
-            ScrollTrigger.refresh();
-        }
-
-        // ===== 页面加载时强制滚动到顶部（多次尝试以确保生效） =====
-        function forceScrollTop() {
-            window.scrollTo(0, 0);
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
-            // 延迟再执行一次，防止浏览器覆盖
-            setTimeout(() => {
-                window.scrollTo(0, 0);
-                document.documentElement.scrollTop = 0;
-                document.body.scrollTop = 0;
-            }, 100);
-        }
-
-        window.addEventListener('load', () => {
-            forceScrollTop();
-            initAnimation();
+            return () => {
+                tlMobile.scrollTrigger.kill();
+                tlMobile.kill();
+            };
         });
-
-        // ===== 视口大小变化：防抖后刷新页面 =====
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                // 设置标记，刷新后强制回顶
-                sessionStorage.setItem('forceScrollTop', 'true');
-                location.reload();
-            }, 300);
-        });
-
-        // ===== 刷新后检测标记并强制回顶 =====
-        if (sessionStorage.getItem('forceScrollTop') === 'true') {
-            sessionStorage.removeItem('forceScrollTop');
-            // 页面加载完成后会执行 forceScrollTop，这里可以提前再调一次
-            window.addEventListener('DOMContentLoaded', forceScrollTop);
-        }
     </script>
 
     <script>
