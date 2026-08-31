@@ -15,475 +15,657 @@
     <meta property="og:locale" content="zh-CN">
     <meta property="og:site_name" content="后室中文数据库">
     <meta property="og:type" content="website">
+
     <style>
-        /* 后室主题样式 */
+        /* ===== 新主页配色 & 基础 ===== */
         :root {
-            --main-color: #fefc88;
-            --accent-color: #d5f74b;
-            --text-color: #e0e0e0;
-            --card-bg: rgba(30, 30, 30, 0.85);
-            --warning-color: #ff9966;
-            --success-color: #99ff99;
-            --danger-color: #ff6666;
+            --yellow-primary: #d4a017;
+            --yellow-primary-hover: #b8891a;
+            --yellow-light: #fcf3cf;
+            --yellow-bg: #fffce8;
+            --yellow-surface: #F7EFBB;
+            --yellow-card: rgba(255, 248, 228, 0.73);
+            --yellow-text: #3a3220;
+            --yellow-text-secondary: #5c5340;
+            --yellow-border: rgba(180, 150, 90, 0.18);
+            --yellow-shadow: 0 8px 32px rgba(160, 120, 40, 0.14);
+            --fluent-radius: 12px;
+            --fluent-blur: 20px;
+            --card-radius: 18px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
-            color: var(--text-color);
-            line-height: 1.6;
-            margin: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+            background: var(--yellow-bg);
+            background-attachment: fixed;
+            color: var(--yellow-text);
+            line-height: 1.7;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* 背景图片容器 */
-        #background {
-            position: fixed;
-            top: -10%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
-            background: url('https://static.wikitide.net/backroomszhwiki/4/40/IMG_0407.jpeg') no-repeat center center/cover;
-            z-index: -1;
-            will-change: transform;
-            filter: blur(2px);
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--yellow-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(140, 110, 60, 0.25);
+            border-radius: 99px;
         }
 
-        /* 导航栏 */
+        /* ===== 导航栏（新主页风格） ===== */
         .nav {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 1rem;
-            border-bottom: 1px solid var(--accent-color);
+            position: fixed;
+            top: 1.25rem;
+            right: 1.25rem;
+            z-index: 100;
             display: flex;
             align-items: center;
-            justify-content: center;
-            position: sticky;
-            top: 0;
-            z-index: 2;
-            backdrop-filter: blur(5px);
+            gap: 0.5rem;
         }
 
-        .nav a {
-            color: var(--text-color);
-            text-decoration: none;
-            margin: 0 1rem;
-            padding: 0.5rem 1.5rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            position: relative;
+        .nav-checkbox {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            pointer-events: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            max-width: 0;
+            opacity: 0;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.3);
-            font-weight: 500;
+            white-space: nowrap;
+            background: var(--yellow-surface);
+            backdrop-filter: blur(var(--fluent-blur, 20px));
+            -webkit-backdrop-filter: blur(var(--fluent-blur, 20px));
+            border: 1px solid var(--yellow-border);
+            border-radius: 999px;
+            padding: 0;
+            transition: max-width 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.35s ease,
+                padding 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow: 0 4px 16px rgba(150, 110, 30, 0.08);
         }
 
-        .nav a:hover {
-            color: var(--accent-color);
-            text-shadow: 0 0 8px var(--accent-color);
-            box-shadow: 0 0 15px var(--accent-color);
-            background: rgba(0, 0, 0, 0.5);
+        @media (min-width: 841px) {
+            .nav:hover .nav-links {
+                max-width: 560px;
+                opacity: 1;
+                padding: 0.45rem 1.4rem;
+            }
+            .nav:hover .nav-toggle svg .bar-top {
+                transform: translateY(6px) rotate(45deg);
+            }
+            .nav:hover .nav-toggle svg .bar-mid {
+                opacity: 0;
+                transform: scaleX(0.4);
+            }
+            .nav:hover .nav-toggle svg .bar-bot {
+                transform: translateY(-6px) rotate(-45deg);
+            }
+        }
+
+        @media (max-width: 840px) {
+            .nav:hover .nav-links {
+                max-width: 0;
+                opacity: 0;
+                padding: 0;
+            }
+            .nav-checkbox:checked~.nav-links {
+                max-width: min(480px, 75vw);
+                opacity: 1;
+                padding: 0.4rem 1.1rem;
+            }
+            .nav-checkbox:checked~.nav-toggle svg .bar-top {
+                transform: translateY(6px) rotate(45deg);
+            }
+            .nav-checkbox:checked~.nav-toggle svg .bar-mid {
+                opacity: 0;
+                transform: scaleX(0.4);
+            }
+            .nav-checkbox:checked~.nav-toggle svg .bar-bot {
+                transform: translateY(-6px) rotate(-45deg);
+            }
+        }
+
+        .nav-logo {
+            height: 32px;
+            margin-right: 0.6rem;
+            filter: drop-shadow(0 0 6px rgba(190, 155, 50, 0.2));
+            transition: transform 0.25s ease;
+            flex-shrink: 0;
+        }
+        .nav-logo:hover {
             transform: scale(1.05);
         }
 
-        .nav img {
-            height: 40px;
-            margin-right: 1rem;
-            vertical-align: middle;
-            filter: drop-shadow(0 0 5px var(--accent-color));
+        .nav-links a {
+            color: var(--yellow-text-secondary);
+            text-decoration: none;
+            padding: 0.4rem 1.05rem;
+            border-radius: 999px;
+            font-size: 0.92rem;
+            font-weight: 470;
+            transition: all 0.25s ease;
+            letter-spacing: 0.01em;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--yellow-primary);
+            border-radius: 99px;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: #3a3020;
+            background: rgba(210, 170, 60, 0.15);
+        }
+        .nav-links a:hover::after {
+            width: 52%;
         }
 
-        /* 主容器 */
+        .nav-toggle {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--yellow-surface);
+            backdrop-filter: blur(var(--fluent-blur, 20px));
+            -webkit-backdrop-filter: blur(var(--fluent-blur, 20px));
+            border: 1px solid var(--yellow-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            color: var(--yellow-text-secondary);
+            box-shadow: 0 4px 18px rgba(150, 110, 30, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        .nav-toggle:hover {
+            transform: scale(1.06);
+            background: rgba(235, 210, 140, 0.95);
+            box-shadow: 0 6px 24px rgba(150, 110, 30, 0.22);
+            color: #3a3020;
+        }
+        .nav-toggle:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 8px rgba(150, 110, 30, 0.12);
+        }
+        .nav-toggle svg .bar {
+            transition: transform 0.35s ease, opacity 0.3s ease;
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+
+        /* ===== 容器 ===== */
         .container {
             max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
+            width: 100%;
+            margin: 4rem auto 2rem;
+            padding: 0 1rem;
         }
 
         .title {
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px var(--accent-color);
-            animation: flicker 3s infinite;
-            margin-bottom: 0.5rem;
+            font-size: 2.8rem;
+            font-weight: 270;
+            letter-spacing: 0.02em;
+            color: #2c2418;
+            text-shadow: 0 2px 30px rgba(245, 235, 195, 0.5);
+            margin-bottom: 0.35rem;
+            text-align: center;
         }
-
+        .title span {
+            font-weight: 570;
+            color: #b3891a;
+            text-shadow: 0 0 30px rgba(196, 156, 42, 0.2);
+        }
         .subtitle {
-            color: #aaa;
-            margin-bottom: 2rem;
-            font-size: 1.1rem;
+            text-align: center;
+            color: rgba(60, 50, 32, 0.55);
+            letter-spacing: 0.3em;
+            font-weight: 395;
+            margin-bottom: 2.5rem;
+            text-transform: uppercase;
+            font-size: 0.95rem;
         }
 
-        /* 内容卡片 */
+        /* ===== 卡片 ===== */
         .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: left;
+            background: var(--yellow-card);
+            backdrop-filter: blur(var(--fluent-blur, 20px));
+            -webkit-backdrop-filter: blur(var(--fluent-blur, 20px));
+            border-radius: var(--card-radius, 18px);
+            padding: 28px 30px;
+            margin-bottom: 28px;
+            box-shadow: var(--yellow-shadow);
+            border: 1px solid var(--yellow-border);
+            transition: box-shadow 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 10px 40px rgba(160, 120, 40, 0.18);
         }
 
         .card-title {
-            color: var(--accent-color);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 1.5rem;
-            text-shadow: 0 0 5px var(--accent-color);
+            color: var(--yellow-primary);
+            font-size: 1.6rem;
+            font-weight: 520;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--yellow-border);
+            letter-spacing: 0.01em;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .card-title .accent-line {
+            display: inline-block;
+            width: 4px;
+            height: 1.6rem;
+            background: var(--yellow-primary);
+            border-radius: 99px;
+            flex-shrink: 0;
         }
 
         h3 {
-            color: var(--text-color);
-            margin: 15px 0 10px 0;
+            color: var(--yellow-text);
+            font-weight: 550;
             font-size: 1.2rem;
+            margin: 1.2rem 0 0.6rem 0;
+        }
+        h4 {
+            color: var(--yellow-text-secondary);
+            font-weight: 520;
+            font-size: 1rem;
+            margin: 0.8rem 0 0.4rem 0;
         }
 
-        /* 表单样式 */
+        /* ===== 表单元素 ===== */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 1.8rem;
         }
 
-        .checkbox-group, .radio-group {
+        .checkbox-group,
+        .radio-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 10px;
+            gap: 10px 14px;
+            margin-top: 8px;
         }
 
-        .checkbox-item, .radio-item {
+        .checkbox-item,
+        .radio-item {
             display: flex;
             align-items: center;
-            margin-bottom: 5px;
-            padding: 8px 12px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 6px;
-            transition: all 0.2s;
+            padding: 6px 14px 6px 10px;
+            background: rgba(255, 248, 228, 0.4);
+            border-radius: 30px;
+            border: 1px solid rgba(180, 150, 90, 0.12);
+            transition: background 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+        }
+        .checkbox-item:hover,
+        .radio-item:hover {
+            background: rgba(255, 248, 228, 0.8);
+            border-color: rgba(180, 150, 90, 0.3);
         }
 
-        .checkbox-item:hover, .radio-item:hover {
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        input[type="checkbox"], input[type="radio"] {
-            margin-right: 8px;
+        input[type="checkbox"],
+        input[type="radio"] {
             width: 18px;
             height: 18px;
+            margin-right: 8px;
+            accent-color: var(--yellow-primary);
             cursor: pointer;
-            accent-color: var(--accent-color);
+            flex-shrink: 0;
         }
 
         label {
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 470;
+            color: var(--yellow-text);
+            font-size: 0.95rem;
         }
 
         .required::after {
             content: " *";
-            color: var(--danger-color);
-        }
-
-        .not-recommended {
-            color: var(--warning-color);
-            font-style: italic;
-        }
-
-        /* 输入框样式 */
-        .special-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 6px;
-            font-size: 1rem;
-            margin-top: 8px;
-            background: rgba(0, 0, 0, 0.3);
-            color: var(--text-color);
-            transition: all 0.3s;
-        }
-
-        .special-input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 0 2px rgba(213, 247, 75, 0.2);
-        }
-
-        textarea.special-input {
-            min-height: 100px;
-            resize: vertical;
+            color: #b84a2a;
         }
 
         .note {
-            font-size: 0.9rem;
-            color: #aaa;
-            margin-top: 5px;
+            font-size: 0.85rem;
+            color: var(--yellow-text-secondary);
+            opacity: 0.7;
             font-style: italic;
+            margin-top: 4px;
+        }
+
+        /* ===== 输入框 ===== */
+        .special-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 248, 228, 0.5);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--yellow-border);
+            border-radius: 30px;
+            font-size: 0.95rem;
+            color: var(--yellow-text);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            margin-top: 6px;
+            font-family: inherit;
+        }
+        .special-input:focus {
+            outline: none;
+            border-color: var(--yellow-primary);
+            box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.15);
+            background: rgba(255, 248, 228, 0.7);
+        }
+        textarea.special-input {
+            min-height: 80px;
+            resize: vertical;
+            border-radius: 18px;
         }
 
         .warning-note {
-            color: var(--warning-color);
-            background: rgba(255, 153, 102, 0.1);
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 10px;
-            border-left: 4px solid var(--warning-color);
+            background: rgba(255, 248, 228, 0.6);
+            backdrop-filter: blur(4px);
+            border-left: 4px solid var(--yellow-primary);
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin: 12px 0;
+            color: var(--yellow-text-secondary);
+            font-size: 0.93rem;
+        }
+        .warning-note strong {
+            color: var(--yellow-text);
+        }
+        .warning-note ul {
+            padding-left: 20px;
+            margin: 6px 0;
+        }
+        .warning-note ul li {
+            margin-bottom: 4px;
         }
 
-        /* 结果区域 */
+        /* ===== 分类示例标签 ===== */
+        .category-example {
+            display: inline-block;
+            background: rgba(255, 248, 228, 0.6);
+            padding: 2px 10px;
+            margin: 2px 6px 2px 0;
+            border-radius: 30px;
+            font-family: 'Consolas', monospace;
+            font-size: 0.85rem;
+            color: var(--yellow-primary);
+            border: 1px solid rgba(180, 150, 90, 0.15);
+        }
+
+        /* ===== 按钮 ===== */
+        .btn-fluent {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            background: var(--yellow-primary);
+            color: #2c2218;
+            border: none;
+            padding: 0.75rem 2.2rem;
+            border-radius: 999px;
+            font-size: 1.05rem;
+            font-weight: 595;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 24px rgba(194, 158, 46, 0.3);
+            text-decoration: none;
+            letter-spacing: 0.015em;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-fluent::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 251, 206, 0.25) 0%, transparent 60%);
+            pointer-events: none;
+            border-radius: inherit;
+        }
+        .btn-fluent:hover {
+            background: var(--yellow-primary-hover);
+            box-shadow: 0 8px 36px rgba(186, 152, 41, 0.47);
+            color: #1f1810;
+            transform: translateY(-2px);
+        }
+        .btn-fluent:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: 0 2px 12px rgba(183, 149, 43, 0.3);
+        }
+        .btn-fluent svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 248, 228, 0.7);
+            backdrop-filter: blur(4px);
+            color: var(--yellow-text);
+            border: 1px solid var(--yellow-border);
+            box-shadow: 0 2px 12px rgba(160, 120, 40, 0.08);
+        }
+        .btn-secondary:hover {
+            background: rgba(255, 248, 228, 0.95);
+            border-color: var(--yellow-primary);
+            box-shadow: 0 6px 24px rgba(160, 120, 40, 0.15);
+        }
+        .btn-danger {
+            background: #c0392b;
+            color: white;
+            box-shadow: 0 4px 16px rgba(192, 57, 43, 0.25);
+        }
+        .btn-danger:hover {
+            background: #a93226;
+            box-shadow: 0 8px 28px rgba(192, 57, 43, 0.35);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        /* ===== 步骤指示器 ===== */
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .step {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(255, 248, 228, 0.5);
+            border: 1px solid var(--yellow-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--yellow-text-secondary);
+            transition: all 0.3s ease;
+        }
+        .step.active {
+            background: var(--yellow-primary);
+            color: #fff;
+            border-color: var(--yellow-primary);
+            box-shadow: 0 0 0 4px rgba(212, 160, 23, 0.2);
+        }
+        .step.completed {
+            background: rgba(212, 160, 23, 0.2);
+            color: var(--yellow-primary);
+            border-color: var(--yellow-primary);
+        }
+
+        /* ===== 结果框 ===== */
         .result-box {
-            background: rgba(0, 0, 0, 0.7);
-            color: var(--text-color);
+            background: rgba(255, 248, 228, 0.5);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--yellow-border);
+            border-radius: 16px;
             padding: 20px;
-            border-radius: 6px;
             font-family: 'Consolas', 'Monaco', monospace;
             white-space: pre-wrap;
             word-wrap: break-word;
             min-height: 200px;
             max-height: 400px;
             overflow-y: auto;
-            margin-top: 15px;
-            line-height: 1.5;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--yellow-text);
+            line-height: 1.6;
+            margin-top: 14px;
+            font-size: 0.92rem;
         }
 
-        /* 按钮样式 */
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            padding: 14px 30px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(0, 0, 0, 0.5);
-            color: var(--text-color);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .generate-btn {
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            border: 1px solid #3498db;
-        }
-
-        .generate-btn:hover {
-            background: linear-gradient(45deg, #2980b9, #1c5a7a);
-            box-shadow: 0 0 15px rgba(52, 152, 219, 0.5);
-        }
-
-        .copy-btn {
-            background: linear-gradient(45deg, #2ecc71, #27ae60);
-            border: 1px solid #2ecc71;
-        }
-
-        .copy-btn:hover {
-            background: linear-gradient(45deg, #27ae60, #1e8449);
-            box-shadow: 0 0 15px rgba(46, 204, 113, 0.5);
-        }
-
-        .reset-btn {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            border: 1px solid #e74c3c;
-        }
-
-        .reset-btn:hover {
-            background: linear-gradient(45deg, #c0392b, #a93226);
-            box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
-        }
-
-        /* 状态消息 */
+        /* ===== 状态消息 ===== */
         .status {
             text-align: center;
-            padding: 10px;
-            margin-top: 15px;
-            border-radius: 4px;
+            padding: 10px 18px;
+            margin-top: 16px;
+            border-radius: 30px;
             font-weight: 500;
             opacity: 0;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s ease, background 0.3s ease;
         }
-
         .status.success {
-            background: rgba(46, 204, 113, 0.2);
-            color: #2ecc71;
-            border: 1px solid #2ecc71;
+            background: rgba(74, 222, 128, 0.15);
+            color: #2d7a4a;
+            border: 1px solid rgba(74, 222, 128, 0.2);
             opacity: 1;
         }
-
         .status.error {
-            background: rgba(231, 76, 60, 0.2);
-            color: #e74c3c;
-            border: 1px solid #e74c3c;
+            background: rgba(248, 113, 113, 0.15);
+            color: #a52a2a;
+            border: 1px solid rgba(248, 113, 113, 0.2);
             opacity: 1;
         }
-
         .status.warning {
-            background: rgba(255, 153, 102, 0.2);
-            color: #ff9966;
-            border: 1px solid #ff9966;
+            background: rgba(250, 204, 21, 0.15);
+            color: #8a6d1b;
+            border: 1px solid rgba(250, 204, 21, 0.2);
             opacity: 1;
         }
 
-        /* 分类标签示例 */
-        .category-example {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 3px 8px;
-            margin: 2px 5px 2px 0;
-            border-radius: 3px;
-            font-family: monospace;
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        /* 页脚 */
+        /* ===== 页脚 ===== */
         footer {
-            position: relative;
-            z-index: 1;
-            background: rgba(0, 0, 0, 0.7);
             text-align: center;
-            padding: 1rem;
+            padding: 2rem 1.5rem 0.5rem;
+            font-size: 0.9rem;
+            color: var(--yellow-text-secondary);
+            width: 100%;
             margin-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid var(--yellow-border);
         }
-
         footer a {
-            color: var(--accent-color);
+            color: #9b7a2e;
             text-decoration: none;
+            transition: color 0.25s ease;
         }
-
         footer a:hover {
+            color: #6d551e;
             text-decoration: underline;
         }
-
-        /* 动画效果 */
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+        footer .sep {
+            color: rgba(124, 102, 54, 0.2);
+            margin: 0 0.6rem;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .title {
-                font-size: 2rem;
-            }
-            
-            .card {
-                padding: 15px;
-            }
-            
-            .checkbox-group, .radio-group {
-                flex-direction: column;
-            }
-            
-            .button-group {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            button {
-                width: 100%;
-                max-width: 300px;
-            }
-        }
-
-        /* 隐藏元素 */
+        /* ===== 工具类 ===== */
         .hidden {
             display: none !important;
         }
-
-        /* 步骤指示器 */
-        .step-indicator {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 30px;
-            gap: 10px;
+        .fade-in {
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        .step {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            transition: all 0.3s;
+        /* ===== 响应式 ===== */
+        @media (max-width: 768px) {
+            body { padding: 1rem 0.5rem; }
+            .container { padding: 0 0.5rem; }
+            .card { padding: 20px 16px; }
+            .title { font-size: 2.2rem; }
+            .subtitle { font-size: 0.8rem; letter-spacing: 0.2em; }
+            .checkbox-group, .radio-group { gap: 6px; }
+            .checkbox-item, .radio-item { padding: 4px 10px 4px 8px; font-size: 0.9rem; }
+            .btn-fluent { padding: 0.6rem 1.6rem; font-size: 0.95rem; width: 100%; justify-content: center; }
+            .button-group { flex-direction: column; align-items: center; }
+            .nav { top: 0.8rem; right: 0.8rem; }
+            .nav-toggle { width: 42px; height: 42px; }
+            .nav-links a { padding: 0.3rem 0.7rem; font-size: 0.85rem; }
+            .nav-logo { height: 26px; }
         }
-
-        .step.active {
-            background: var(--accent-color);
-            color: #000;
-            box-shadow: 0 0 10px var(--accent-color);
-        }
-
-        .step.completed {
-            background: rgba(46, 204, 113, 0.3);
-            color: #2ecc71;
-        }
-
-        /* 规则部分 */
-        .rules {
-            background: rgba(255, 204, 0, 0.1);
-            border-left: 5px solid #ffcc00;
-        }
-
-        .rules ul {
-            padding-left: 20px;
-            margin-bottom: 15px;
-        }
-
-        .rules li {
-            margin-bottom: 8px;
+        @media (max-width: 480px) {
+            .title { font-size: 1.8rem; }
+            .card-title { font-size: 1.3rem; }
+            .step { width: 30px; height: 30px; font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
-    <!-- 背景图片容器 -->
-    <div id="background"></div>
 
-    <!-- 导航栏 -->
-    <nav class="nav">
-        <img src="https://static.wikitide.net/backroomszhwiki/thumb/1/16/SiteLogo.png/400px-SiteLogo.png" 
-             style="height: 40px; margin-right: 1rem; vertical-align: middle;">
-        <a href="https://wiki.backroomszh.org" target="_blank">返回数据库</a>
-        <a href="#generator">分类生成器</a>
-        <a href="#rules">分类规则</a>
+    <!-- ===== 导航 ===== -->
+    <nav class="nav" role="navigation" aria-label="主导航">
+        <input type="checkbox" id="nav-toggle-checkbox" class="nav-checkbox">
+        <div class="nav-links">
+            <img class="nav-logo" src="https://static.wikitide.net/backroomszhwiki/thumb/1/16/SiteLogo.png/400px-SiteLogo.png" alt="Sitelogo">
+            <a href="https://wiki.backroomszh.org" target="_blank">数据库</a>
+            <a href="#generator">分类生成器</a>
+            <a href="#rules">分类规则</a>
+        </div>
+        <label for="nav-toggle-checkbox" class="nav-toggle" role="button" aria-label="切换导航菜单" tabindex="0">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                 stroke-linejoin="round" aria-hidden="true">
+                <line x1="3" y1="6"  x2="21" y2="6"  class="bar bar-top" />
+                <line x1="3" y1="12" x2="21" y2="12" class="bar bar-mid" />
+                <line x1="3" y1="18" x2="21" y2="18" class="bar bar-bot" />
+            </svg>
+        </label>
     </nav>
 
     <div class="container">
-        <h1 class="title">后室中文数据库分类生成器</h1>
-        <p class="subtitle">为后室中文数据库文章生成完整的wikitext分类代码</p>
-        
+        <h1 class="title">页面<span>分类生成器</span></h1>
+        <p class="subtitle">为后室中文数据库文章生成完整的 wikitext 分类代码</p>
+
         <!-- 步骤指示器 -->
         <div class="step-indicator">
             <div class="step active" id="step1">1</div>
@@ -492,778 +674,385 @@
             <div class="step" id="step4">4</div>
         </div>
 
-        <!-- 规则部分 -->
-        <section id="rules" class="card rules">
-            <h2 class="card-title">分类规则说明</h2>
-            <p>在后室中文数据库，基础分类由以下几类组成：</p>
-            <ul>
-                <li><strong>页面基础类型</strong>：表明该文章介绍对象的基本类别。
-                    <div class="category-example">[[Category:层级]]</div>
-                    <div class="category-example">[[Category:物品]]</div>
-                    <div class="category-example">[[Category:实体]]</div>
-                    <div class="category-example">[[Category:组织]]</div>
-                    <div class="category-example">[[Category:故事]]</div>
-                    <div class="category-example">[[Category:中心页]]</div>
-                    <div class="category-example">[[Category:更多世界]]</div>
+        <!-- 规则说明 -->
+        <section id="rules" class="card">
+            <h2 class="card-title"><span class="accent-line"></span>分类规则说明</h2>
+            <p>所有文章均需添加分类，分类种类如下（带 <strong>*</strong> 的为必选项，除第一项外均可选择多个）：</p>
+            <ul style="padding-left: 20px; margin: 12px 0;">
+                <li><strong>* 类型</strong>：普通层级、普通实体、普通物品、CN层级、CN实体、CN物品、流浪层级、理论与研究等（层群加描述对象）。
+                    <div style="margin-top: 4px;">
+                        <span class="category-example">[[Category:普通层级]]</span>
+                        <span class="category-example">[[Category:CN实体]]</span>
+                        <span class="category-example">[[Category:流浪层级]]</span>
+                        <span class="category-example">[[Category:理论与研究]]</span>
+                    </div>
                 </li>
-                <li><strong>层群归属</strong>：表明该文章属于普通层群还是CN层群。
-                    <div class="category-example">[[Category:普通层群]]</div>
-                    <div class="category-example">[[Category:CN层群]]</div>
-                    <p class="note">注意：中心页、故事和组织页面通常不需要层群归属，更多世界页面同样不需要。</p>
+                <li><strong>等级</strong>（存在时必填）：如“生存难度1”“实体等级3”等。
+                    <div style="margin-top: 4px;">
+                        <span class="category-example">[[Category:生存难度1]]</span>
+                        <span class="category-example">[[Category:实体等级3]]</span>
+                    </div>
                 </li>
-                <li><strong>对象分级</strong>：表明文章描述对象的属性和危险程度。
-                    <div class="category-example">[[Category:生存难度0]]</div>
-                    <div class="category-example">[[Category:物品等级1A]]</div>
-                    <p class="note">根据页面基础类型选择合适的对象分级。</p>
-                </li>
-                <li><strong>特殊分类</strong>：由于其他理由应当添加的分类。
-                    <p>如：由于文章隶属某一设定，需要按照该设定中心页的要求添加分类。</p>
-                </li><br>
-                <li>详情请查看<a href="https://wiki.backroomszh.org/The_Backrooms_Wiki:%E5%88%86%E7%B1%BB%E7%AE%A1%E7%90%86%E5%8A%9E%E6%B3%95">这里</a></li>
+                <li><strong>主题</strong>：最显著特征（如“学校”“饮料”）、风格（如“意识流”“梦核”）、功能（如“治疗”“通讯”）、抒情（如“积极”“负面”）等。</li>
+                <li><strong>来源种类</strong>：如“搬运”。</li>
+                <li><strong>系列</strong>：文章所属的系列。</li>
+                <li><strong>其他合适的分类</strong>：自由补充。</li>
             </ul>
+            <p>详情请查看 <a href="https://wiki.backroomszh.org/The_Backrooms_Wiki:%E5%86%85%E5%AE%B9%E6%96%B9%E9%92%88#%E7%AC%AC%E5%9B%9B%E7%AB%A0_%E7%BC%96%E5%8F%B7%E3%80%81%E5%88%86%E7%B1%BB%E4%B8%8E%E5%90%8D%E8%AF%8D%E7%9B%B8%E5%85%B3%E8%A7%84%E5%AE%9A" target="_blank" style="color: var(--yellow-primary);">内容方针</a>。</p>
         </section>
 
-        <!-- 分类生成器 -->
+        <!-- 生成器 -->
         <section id="generator" class="card fade-in">
-            <h2 class="card-title">分类生成器</h2>
-            
-            <!-- 步骤1: 页面基础类型 (Required) -->
+            <h2 class="card-title"><span class="accent-line"></span>分类生成器</h2>
+
+            <!-- 步骤1: 类型（必选） -->
             <div class="form-group" id="step1-section">
-                <h3 class="required">1. 页面基础类型 <span class="note">(必选，单选)</span></h3>
+                <h3 class="required">1. 类型 <span class="note">(必选，单选)</span></h3>
                 <div class="radio-group">
-                    <div class="radio-item">
-                        <input type="radio" id="type-level" name="page-type" value="层级">
-                        <label for="type-level">层级</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="type-item" name="page-type" value="物品">
-                        <label for="type-item">物品</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="type-entity" name="page-type" value="实体">
-                        <label for="type-entity">实体</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="type-organization" name="page-type" value="组织">
-                        <label for="type-organization">组织</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="type-story" name="page-type" value="故事">
-                        <label for="type-story">故事</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="type-center" name="page-type" value="中心页">
-                        <label for="type-center">中心页</label>
-                    </div>
-                    <div class="radio-item">
-                        <input type="radio" id="type-other" name="page-type" value="更多世界">
-                        <label for="type-other">更多世界</label>
-                    </div>
+                    <div class="radio-item"><input type="radio" id="type-normal-level" name="page-type" value="普通层级"><label for="type-normal-level">普通层级</label></div>
+                    <div class="radio-item"><input type="radio" id="type-normal-entity" name="page-type" value="普通实体"><label for="type-normal-entity">普通实体</label></div>
+                    <div class="radio-item"><input type="radio" id="type-normal-item" name="page-type" value="普通物品"><label for="type-normal-item">普通物品</label></div>
+                    <div class="radio-item"><input type="radio" id="type-cn-level" name="page-type" value="CN层级"><label for="type-cn-level">CN层级</label></div>
+                    <div class="radio-item"><input type="radio" id="type-cn-entity" name="page-type" value="CN实体"><label for="type-cn-entity">CN实体</label></div>
+                    <div class="radio-item"><input type="radio" id="type-cn-item" name="page-type" value="CN物品"><label for="type-cn-item">CN物品</label></div>
+                    <div class="radio-item"><input type="radio" id="type-wander" name="page-type" value="流浪层级"><label for="type-wander">流浪层级</label></div>
+                    <div class="radio-item"><input type="radio" id="type-theory" name="page-type" value="理论与研究"><label for="type-theory">理论与研究</label></div>
+                    <div class="radio-item"><input type="radio" id="type-other" name="page-type" value="other"><label for="type-other">其他</label></div>
+                </div>
+                <div id="other-type-container" class="hidden" style="margin-top: 12px;">
+                    <input type="text" id="other-type-input" class="special-input" placeholder="请输入自定义类型名称，如：特殊层级">
+                    <p class="note">只需输入名称，无需添加分类前缀</p>
                 </div>
             </div>
 
-            <!-- 步骤2: 层群归属 -->
+            <!-- 步骤2: 等级（可选） -->
             <div class="form-group hidden" id="step2-section">
-                <h3>2. 层群归属 <span class="note">(可选，可多选)</span></h3>
-                <div id="cluster-warning" class="warning-note hidden">
-                    <strong>注意：</strong>对于<span id="cluster-warning-type"></span>页面，通常不需要添加层群归属。
+                <h3>2. 等级 <span class="note">(可选，存在时必填)</span></h3>
+                <div class="checkbox-item" style="display: flex; align-items: center; gap: 10px; padding: 8px 14px;">
+                    <input type="checkbox" id="has-level" style="width: 18px; height: 18px; accent-color: var(--yellow-primary);">
+                    <label for="has-level">此页面有等级分类</label>
                 </div>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="cluster-normal" name="cluster" value="普通层群">
-                        <label for="cluster-normal">普通层群</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="cluster-cn" name="cluster" value="CN层群">
-                        <label for="cluster-cn">CN层群</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="cluster-other" name="cluster" value="other">
-                        <label for="cluster-other">其他层群</label>
-                    </div>
-                </div>
-                <div id="other-cluster-container" class="hidden" style="margin-top: 15px;">
-                    <input type="text" id="other-cluster-input" class="special-input" placeholder="请输入层群名称，例如：特殊层群">
-                    <p class="note">只需输入层群名称，无需输入完整分类代码</p>
+                <div id="level-input-container" class="hidden" style="margin-top: 12px;">
+                    <input type="text" id="level-input" class="special-input" placeholder="例如：生存难度1、实体等级3">
+                    <p class="note">只输入等级名称，如“生存难度1”</p>
                 </div>
             </div>
 
-            <!-- 步骤3: 对象分级 -->
+            <!-- 步骤3: 主题 & 来源 -->
             <div class="form-group hidden" id="step3-section">
-                <h3>3. 对象分级 <span class="note">(根据实际情况选择)</span></h3>
-                <div id="classification-instructions" class="warning-note">
-                    <p><strong>使用提示：</strong></p>
-                    <ul style="margin-top: 5px; margin-bottom: 5px;">
-                        <li><strong>层级</strong>：选择生存难度等级</li>
-                        <li><strong>物品</strong>：选择物品等级</li>
-                        <li><strong>实体</strong>：选择实体等级</li>
-                        <li><strong>其他类型</strong>：通常不需要对象分级</li>
-                    </ul>
+                <h3>3. 主题与来源 <span class="note">(可选)</span></h3>
+                <div style="margin-bottom: 16px;">
+                    <label for="theme-input" style="font-weight: 520;">主题</label>
+                    <input type="text" id="theme-input" class="special-input" placeholder="特征、风格、功能、抒情等，多个用逗号或换行分隔">
+                    <p class="note">例如：学校、意识流、治疗、积极</p>
                 </div>
-                
-                <!-- Survival difficulty (for levels) -->
-                <div id="survival-difficulty" class="classification-group hidden">
-                    <h4>生存难度等级</h4>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="difficulty-0" name="difficulty" value="生存难度0">
-                            <label for="difficulty-0">生存难度 0</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="difficulty-1" name="difficulty" value="生存难度1">
-                            <label for="difficulty-1">生存难度 1</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="difficulty-2" name="difficulty" value="生存难度2">
-                            <label for="difficulty-2">生存难度 2</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="difficulty-3" name="difficulty" value="生存难度3">
-                            <label for="difficulty-3">生存难度 3</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="difficulty-4" name="difficulty" value="生存难度4">
-                            <label for="difficulty-4">生存难度 4</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="difficulty-5" name="difficulty" value="生存难度5">
-                            <label for="difficulty-5">生存难度 5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Item classification -->
-                <div id="item-classification" class="classification-group hidden">
-                    <h4>物品等级</h4>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="item-0" name="item-class" value="物品等级0">
-                            <label for="item-0">物品等级 0</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="item-1a" name="item-class" value="物品等级1A">
-                            <label for="item-1a">物品等级 1A</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="item-1b" name="item-class" value="物品等级1B">
-                            <label for="item-1b">物品等级 1B</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="item-2" name="item-class" value="物品等级2">
-                            <label for="item-2">物品等级 2</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="item-3" name="item-class" value="物品等级3">
-                            <label for="item-3">物品等级 3</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="item-4" name="item-class" value="物品等级4">
-                            <label for="item-4">物品等级 4</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="item-5" name="item-class" value="物品等级5">
-                            <label for="item-5">物品等级 5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Entity classification -->
-                <div id="entity-classification" class="classification-group hidden">
-                    <h4>实体等级</h4>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="entity-0" name="entity-class" value="实体等级0">
-                            <label for="entity-0">实体等级 0</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="entity-1" name="entity-class" value="实体等级1">
-                            <label for="entity-1">实体等级 1</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="entity-2" name="entity-class" value="实体等级2">
-                            <label for="entity-2">实体等级 2</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="entity-3" name="entity-class" value="实体等级3">
-                            <label for="entity-3">实体等级 3</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="entity-4" name="entity-class" value="实体等级4">
-                            <label for="entity-4">实体等级 4</label>
-                        </div>
-                        <div class="checkbox-item">
-                            <input type="checkbox" id="entity-5" name="entity-class" value="实体等级5">
-                            <label for="entity-5">实体等级 5</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Special classification input -->
-                <div style="margin-top: 20px;">
-                    <h4>特殊分级 <span class="note">(可选)</span></h4>
-                    <input type="text" id="special-classification" class="special-input" placeholder="例如：生存难度N/A、物品等级Ω">
-                    <p class="note">只需输入分级名称，无需输入完整分类代码</p>
+                <div>
+                    <label for="source-input" style="font-weight: 520;">来源种类</label>
+                    <input type="text" id="source-input" class="special-input" placeholder="如：搬运">
                 </div>
             </div>
 
-            <!-- 步骤4: 特殊分类 -->
+            <!-- 步骤4: 系列 & 其他 -->
             <div class="form-group hidden" id="step4-section">
-                <h3>4. 特殊分类 <span class="note">(可选)</span></h3>
-                <p>由于其他理由应当添加的分类，例如文章隶属某一设定，需要按照该设定中心页的要求添加分类。</p>
-                
-                <div class="form-group">
-                    <h4>特殊分类输入</h4>
-                    <textarea id="special-categories" class="special-input" rows="4" placeholder="请输入特殊分类名称，每个分类一行或使用逗号分隔&#10;例如：&#10;特殊设定&#10;活动页面"></textarea>
-                    <p class="note">只需输入分类名称，无需输入完整分类代码</p>
+                <h3>4. 系列与其他 <span class="note">(可选)</span></h3>
+                <div style="margin-bottom: 16px;">
+                    <label for="series-input" style="font-weight: 520;">系列</label>
+                    <input type="text" id="series-input" class="special-input" placeholder="所属系列名称">
                 </div>
-                
-                <div class="warning-note">
-                    <p><strong>使用提示：</strong></p>
-                    <ul style="margin-top: 5px; margin-bottom: 5px;">
-                        <li>特殊分类通常是可选的，仅在页面属于特定设定或系列时需要添加</li>
-                        <li>确保添加的分类与页面内容相关</li>
-                        <li>如果不确定是否需要特殊分类，可以留空</li>
-                    </ul>
+                <div>
+                    <label for="other-input" style="font-weight: 520;">其他合适分类</label>
+                    <input type="text" id="other-input" class="special-input" placeholder="多个用逗号或换行分隔">
                 </div>
             </div>
 
             <!-- 导航按钮 -->
             <div class="button-group" id="navigation-buttons">
-                <button class="reset-btn" id="prev-btn" style="display: none;">上一步</button>
-                <button class="generate-btn" id="next-btn">下一步</button>
+                <button class="btn-fluent btn-secondary" id="prev-btn" style="display: none;">上一步</button>
+                <button class="btn-fluent" id="next-btn">下一步</button>
             </div>
         </section>
 
         <!-- 结果区域 -->
         <section id="result-section" class="card hidden fade-in">
-            <h2 class="card-title">生成的分类代码</h2>
+            <h2 class="card-title"><span class="accent-line"></span>生成的分类代码</h2>
             <div class="result-box" id="result-code">
-// 请选择分类选项，然后点击"生成分类代码"按钮
+// 请选择分类选项，然后点击「生成分类代码」按钮
 // 生成的内容将显示在这里
             </div>
-            
             <div class="button-group">
-                <button class="copy-btn" id="copy-btn">复制到剪贴板</button>
-                <button class="reset-btn" id="reset-btn">重新开始</button>
+                <button class="btn-fluent" id="copy-btn">复制到剪贴板</button>
+                <button class="btn-fluent btn-danger" id="reset-btn">重新开始</button>
             </div>
-            
             <div class="status" id="status-message"></div>
         </section>
     </div>
 
     <footer>
-        <small>
-            <a href="https://wiki.backroomszh.org/Project:免责声明" target="_blank">免责声明</a> |
-            <a href="mailto:example@backroomszh.org">站务邮箱</a><br>
-            后室中文数据库 &copy; 2024 | MediaWiki分类生成器
-        </small>
+        <a href="https://wiki.backroomszh.org/Project:%E5%85%8D%E8%B4%A3%E5%A3%B0%E6%98%8E" target="_blank">免责声明</a>
+        <span class="sep">|</span>
+        <a href="mailto:support@backroomszh.org">站务邮箱</a>
+        <br>
+        <small style="opacity:0.6;">后室中文数据库 &copy; 2024 · MediaWiki 分类生成器</small>
     </footer>
 
+    <!-- ===== 功能脚本 ===== -->
     <script>
-        // DOM elements
-        const generateBtn = document.getElementById('next-btn');
-        const copyBtn = document.getElementById('copy-btn');
-        const resetBtn = document.getElementById('reset-btn');
-        const prevBtn = document.getElementById('prev-btn');
-        const resultCode = document.getElementById('result-code');
-        const statusMessage = document.getElementById('status-message');
-        
-        // Step elements
-        const steps = document.querySelectorAll('.step');
-        const stepSections = [
-            document.getElementById('step1-section'),
-            document.getElementById('step2-section'),
-            document.getElementById('step3-section'),
-            document.getElementById('step4-section'),
-            document.getElementById('result-section')
-        ];
-        
-        // Cluster affiliation elements
-        const clusterOtherCheckbox = document.getElementById('cluster-other');
-        const otherClusterContainer = document.getElementById('other-cluster-container');
-        const otherClusterInput = document.getElementById('other-cluster-input');
-        const clusterWarning = document.getElementById('cluster-warning');
-        const clusterWarningType = document.getElementById('cluster-warning-type');
-        
-        // Page type radio buttons
-        const pageTypeRadios = document.querySelectorAll('input[name="page-type"]');
-        
-        // Classification groups
-        const survivalDifficulty = document.getElementById('survival-difficulty');
-        const itemClassification = document.getElementById('item-classification');
-        const entityClassification = document.getElementById('entity-classification');
-        const classificationInstructions = document.getElementById('classification-instructions');
-        
-        // Special inputs
-        const specialClassificationInput = document.getElementById('special-classification');
-        const specialCategoriesInput = document.getElementById('special-categories');
-        
-        // Current step
-        let currentStep = 1;
-        
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize background animation
-            animateBackground();
-            
-            // Initialize step indicators
-            updateStepIndicator();
-            
-            // Page type change handler
-            pageTypeRadios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    // Update step 2 based on page type
-                    updateStep2ForPageType();
+        (function() {
+            'use strict';
+
+            // DOM 元素
+            const generateBtn = document.getElementById('next-btn');
+            const copyBtn = document.getElementById('copy-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const resultCode = document.getElementById('result-code');
+            const statusMessage = document.getElementById('status-message');
+
+            const steps = document.querySelectorAll('.step');
+            const stepSections = [
+                document.getElementById('step1-section'),
+                document.getElementById('step2-section'),
+                document.getElementById('step3-section'),
+                document.getElementById('step4-section'),
+                document.getElementById('result-section')
+            ];
+
+            // 类型相关
+            const typeRadios = document.querySelectorAll('input[name="page-type"]');
+            const otherTypeRadio = document.getElementById('type-other');
+            const otherTypeContainer = document.getElementById('other-type-container');
+            const otherTypeInput = document.getElementById('other-type-input');
+
+            // 等级相关
+            const hasLevelCheck = document.getElementById('has-level');
+            const levelInputContainer = document.getElementById('level-input-container');
+            const levelInput = document.getElementById('level-input');
+
+            // 主题、来源、系列、其他
+            const themeInput = document.getElementById('theme-input');
+            const sourceInput = document.getElementById('source-input');
+            const seriesInput = document.getElementById('series-input');
+            const otherInput = document.getElementById('other-input');
+
+            let currentStep = 1;
+
+            // ---- 初始化 ----
+            function init() {
+                updateStepIndicator();
+
+                // 类型切换：显示“其他”输入框
+                typeRadios.forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        if (this.value === 'other') {
+                            otherTypeContainer.classList.remove('hidden');
+                        } else {
+                            otherTypeContainer.classList.add('hidden');
+                            otherTypeInput.value = '';
+                        }
+                    });
                 });
-            });
-            
-            // Cluster other checkbox handler
-            clusterOtherCheckbox.addEventListener('change', function() {
-                otherClusterContainer.classList.toggle('hidden', !this.checked);
-                if (!this.checked) {
-                    otherClusterInput.value = '';
-                }
-            });
-            
-            // Navigation button handlers
-            generateBtn.addEventListener('click', nextStep);
-            prevBtn.addEventListener('click', prevStep);
-            copyBtn.addEventListener('click', copyToClipboard);
-            resetBtn.addEventListener('click', resetForm);
-            
-            // Initialize form
-            updateStep2ForPageType();
-        });
-        
-        // Background animation
-        function animateBackground() {
-            const background = document.getElementById('background');
-            let posX = 0;
-            let posY = 0;
-            let speedX = 0.1;
-            let speedY = 0.1;
-            const maxX = 30;
-            const maxY = 30;
-            
-            function animate() {
-                posX += speedX;
-                posY += speedY;
-                
-                if (posX > maxX || posX < -maxX) {
-                    speedX = -speedX;
-                }
-                if (posY > maxY || posY < -maxY) {
-                    speedY = -speedY;
-                }
-                
-                background.style.transform = `translate(${posX}px, ${posY}px)`;
-                requestAnimationFrame(animate);
+
+                // 等级复选框切换
+                hasLevelCheck.addEventListener('change', function() {
+                    levelInputContainer.classList.toggle('hidden', !this.checked);
+                    if (!this.checked) levelInput.value = '';
+                });
+
+                // 按钮事件
+                generateBtn.addEventListener('click', nextStep);
+                prevBtn.addEventListener('click', prevStep);
+                copyBtn.addEventListener('click', copyToClipboard);
+                resetBtn.addEventListener('click', resetForm);
+
+                // 初始状态：其他输入隐藏
+                otherTypeContainer.classList.add('hidden');
+                levelInputContainer.classList.add('hidden');
             }
-            
-            animate();
-        }
-        
-        // Update step 2 based on selected page type
-        function updateStep2ForPageType() {
-            const pageType = document.querySelector('input[name="page-type"]:checked');
-            
-            if (!pageType) {
-                clusterWarning.classList.add('hidden');
-                return;
-            }
-            
-            // Show/hide warning for certain page types
-            const type = pageType.value;
-            const needsCluster = ['层级', '物品', '实体'].includes(type);
-            const notRecommended = ['中心页', '故事', '组织', '更多世界'];
-            
-            if (notRecommended.includes(type)) {
-                clusterWarningType.textContent = type;
-                clusterWarning.classList.remove('hidden');
-            } else {
-                clusterWarning.classList.add('hidden');
-            }
-            
-            // Update classification instructions
-            updateClassificationInstructions(type);
-        }
-        
-        // Update classification instructions based on page type
-        function updateClassificationInstructions(pageType) {
-            let instructions = '';
-            
-            switch(pageType) {
-                case '层级':
-                    instructions = '<p><strong>使用提示：</strong></p><ul style="margin-top: 5px; margin-bottom: 5px;"><li><strong>层级</strong>：选择生存难度等级</li><li>其他类型：通常不需要对象分级</li></ul>';
-                    break;
-                case '物品':
-                    instructions = '<p><strong>使用提示：</strong></p><ul style="margin-top: 5px; margin-bottom: 5px;"><li><strong>物品</strong>：选择物品等级</li><li>其他类型：通常不需要对象分级</li></ul>';
-                    break;
-                case '实体':
-                    instructions = '<p><strong>使用提示：</strong></p><ul style="margin-top: 5px; margin-bottom: 5px;"><li><strong>实体</strong>：选择实体等级</li><li>其他类型：通常不需要对象分级</li></ul>';
-                    break;
-                default:
-                    instructions = '<p><strong>使用提示：</strong></p><ul style="margin-top: 5px; margin-bottom: 5px;"><li><strong>层级</strong>：选择生存难度等级</li><li><strong>物品</strong>：选择物品等级</li><li><strong>实体</strong>：选择实体等级</li><li><strong>其他类型</strong>：通常不需要对象分级</li></ul>';
-            }
-            
-            classificationInstructions.innerHTML = instructions;
-            
-            // Show/hide appropriate classification group
-            survivalDifficulty.classList.add('hidden');
-            itemClassification.classList.add('hidden');
-            entityClassification.classList.add('hidden');
-            
-            // Uncheck all classification checkboxes
-            document.querySelectorAll('.classification-group input[type="checkbox"]').forEach(cb => {
-                cb.checked = false;
-            });
-            
-            // Show appropriate classification group
-            if (pageType === '层级') {
-                survivalDifficulty.classList.remove('hidden');
-            } else if (pageType === '物品') {
-                itemClassification.classList.remove('hidden');
-            } else if (pageType === '实体') {
-                entityClassification.classList.remove('hidden');
-            }
-        }
-        
-        // Next step function
-        function nextStep() {
-            // Validate current step
-            if (!validateStep(currentStep)) {
-                return;
-            }
-            
-            // Hide current step
-            stepSections[currentStep - 1].classList.add('hidden');
-            
-            // Move to next step
-            currentStep++;
-            
-            // If we're at the last step, generate the code
-            if (currentStep === 5) {
-                generateCategories();
-                stepSections[4].classList.remove('hidden');
-                generateBtn.textContent = '完成';
-                generateBtn.style.display = 'none';
-                prevBtn.style.display = 'inline-block';
-            } else {
-                // Show next step
-                stepSections[currentStep - 1].classList.remove('hidden');
-                
-                // Update button text
-                if (currentStep === 4) {
-                    generateBtn.textContent = '生成分类代码';
-                }
-                
-                // Show prev button from step 2 onwards
-                if (currentStep > 1) {
-                    prevBtn.style.display = 'inline-block';
-                }
-            }
-            
-            // Update step indicator
-            updateStepIndicator();
-        }
-        
-        // Previous step function
-        function prevStep() {
-            // Hide current step
-            if (currentStep === 5) {
-                stepSections[4].classList.add('hidden');
-            } else {
+
+            // ---- 步骤导航 ----
+            function nextStep() {
+                if (!validateStep(currentStep)) return;
                 stepSections[currentStep - 1].classList.add('hidden');
+                currentStep++;
+                if (currentStep === 5) {
+                    generateCategories();
+                    stepSections[4].classList.remove('hidden');
+                    generateBtn.textContent = '完成';
+                    generateBtn.style.display = 'none';
+                    prevBtn.style.display = 'inline-block';
+                } else {
+                    stepSections[currentStep - 1].classList.remove('hidden');
+                    if (currentStep === 4) generateBtn.textContent = '生成分类代码';
+                    if (currentStep > 1) prevBtn.style.display = 'inline-block';
+                }
+                updateStepIndicator();
             }
-            
-            // Move to previous step
-            currentStep--;
-            
-            // Show previous step
-            stepSections[currentStep - 1].classList.remove('hidden');
-            
-            // Update button text
-            if (currentStep < 4) {
+
+            function prevStep() {
+                if (currentStep === 5) stepSections[4].classList.add('hidden');
+                else stepSections[currentStep - 1].classList.add('hidden');
+                currentStep--;
+                stepSections[currentStep - 1].classList.remove('hidden');
+                if (currentStep < 4) {
+                    generateBtn.style.display = 'inline-block';
+                    generateBtn.textContent = '下一步';
+                }
+                if (currentStep === 1) prevBtn.style.display = 'none';
+                updateStepIndicator();
+            }
+
+            function validateStep(step) {
+                if (step === 1) {
+                    const checked = document.querySelector('input[name="page-type"]:checked');
+                    if (!checked) {
+                        showStatus('请选择一个类型', 'error');
+                        return false;
+                    }
+                    if (checked.value === 'other' && !otherTypeInput.value.trim()) {
+                        showStatus('请输入自定义类型名称', 'error');
+                        return false;
+                    }
+                }
+                // 等级验证：如果有勾选但未填内容
+                if (step === 2 && hasLevelCheck.checked && !levelInput.value.trim()) {
+                    showStatus('请填写等级名称', 'error');
+                    return false;
+                }
+                return true;
+            }
+
+            function updateStepIndicator() {
+                steps.forEach((el, idx) => {
+                    el.classList.remove('active', 'completed');
+                    if (idx + 1 === currentStep) el.classList.add('active');
+                    else if (idx + 1 < currentStep) el.classList.add('completed');
+                });
+            }
+
+            // ---- 生成分类代码 ----
+            function generateCategories() {
+                statusMessage.className = 'status';
+                statusMessage.textContent = '';
+
+                const cats = [];
+                cats.push('<!-- 页面分类开始 -->', '');
+
+                // 1. 类型
+                const typeRadio = document.querySelector('input[name="page-type"]:checked');
+                let typeValue = typeRadio.value;
+                if (typeValue === 'other') {
+                    typeValue = otherTypeInput.value.trim();
+                }
+                cats.push('<!-- 类型 -->');
+                cats.push(`[[Category:${typeValue}]]`);
+                cats.push('');
+
+                // 2. 等级（如果勾选且非空）
+                if (hasLevelCheck.checked) {
+                    const level = levelInput.value.trim();
+                    if (level) {
+                        cats.push('<!-- 等级 -->');
+                        parseMultiple(level).forEach(item => cats.push(`[[Category:${item}]]`));
+                        cats.push('');
+                    }
+                }
+
+                // 3. 主题
+                const theme = themeInput.value.trim();
+                if (theme) {
+                    cats.push('<!-- 主题 -->');
+                    parseMultiple(theme).forEach(item => cats.push(`[[Category:${item}]]`));
+                    cats.push('');
+                }
+
+                // 4. 来源
+                const source = sourceInput.value.trim();
+                if (source) {
+                    cats.push('<!-- 来源种类 -->');
+                    parseMultiple(source).forEach(item => cats.push(`[[Category:${item}]]`));
+                    cats.push('');
+                }
+
+                // 5. 系列
+                const series = seriesInput.value.trim();
+                if (series) {
+                    cats.push('<!-- 系列 -->');
+                    parseMultiple(series).forEach(item => cats.push(`[[Category:${item}]]`));
+                    cats.push('');
+                }
+
+                // 6. 其他
+                const other = otherInput.value.trim();
+                if (other) {
+                    cats.push('<!-- 其他分类 -->');
+                    parseMultiple(other).forEach(item => cats.push(`[[Category:${item}]]`));
+                    cats.push('');
+                }
+
+                cats.push('<!-- 页面分类结束 -->');
+                resultCode.textContent = cats.join('\n');
+                showStatus('分类代码生成成功！', 'success');
+            }
+
+            // 辅助：解析逗号/换行分隔的多个项目
+            function parseMultiple(input) {
+                if (!input.trim()) return [];
+                return input.split(/[,\n]/).map(s => s.trim().replace(/^\[\[Category:(.*)\]\]$/, '$1')).filter(Boolean);
+            }
+
+            // ---- 复制 ----
+            function copyToClipboard() {
+                if (!resultCode.textContent || resultCode.textContent.startsWith('//')) {
+                    showStatus('请先生成分类代码', 'error');
+                    return;
+                }
+                const range = document.createRange();
+                range.selectNodeContents(resultCode);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+                try {
+                    const ok = document.execCommand('copy');
+                    showStatus(ok ? '分类代码已复制到剪贴板！' : '复制失败，请手动复制', ok ? 'success' : 'error');
+                } catch (_) {
+                    showStatus('无法复制到剪贴板，请手动选择并复制', 'error');
+                }
+                sel.removeAllRanges();
+            }
+
+            // ---- 重置 ----
+            function resetForm() {
+                document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+                document.querySelectorAll('input[type="radio"]').forEach(rb => rb.checked = false);
+                document.querySelectorAll('input[type="text"], textarea').forEach(inp => inp.value = '');
+                otherTypeContainer.classList.add('hidden');
+                levelInputContainer.classList.add('hidden');
+
+                currentStep = 1;
+                updateStepIndicator();
+                stepSections.forEach((sec, idx) => {
+                    if (idx === 0) sec.classList.remove('hidden');
+                    else sec.classList.add('hidden');
+                });
+                stepSections[4].classList.add('hidden');
                 generateBtn.style.display = 'inline-block';
                 generateBtn.textContent = '下一步';
-            }
-            
-            // Hide prev button if at step 1
-            if (currentStep === 1) {
                 prevBtn.style.display = 'none';
-            }
-            
-            // Update step indicator
-            updateStepIndicator();
-        }
-        
-        // Validate current step
-        function validateStep(step) {
-            let isValid = true;
-            let errorMessage = '';
-            
-            switch(step) {
-                case 1:
-                    // Check page type is selected
-                    const pageType = document.querySelector('input[name="page-type"]:checked');
-                    if (!pageType) {
-                        isValid = false;
-                        errorMessage = '请选择一个页面基础类型';
-                    }
-                    break;
-                    
-                case 2:
-                    // No validation needed for cluster (optional)
-                    break;
-                    
-                case 3:
-                    // No validation needed for classification (optional)
-                    break;
-                    
-                case 4:
-                    // No validation needed for special categories (optional)
-                    break;
-            }
-            
-            if (!isValid) {
-                statusMessage.textContent = '错误: ' + errorMessage;
-                statusMessage.className = 'status error';
-                setTimeout(() => {
-                    statusMessage.textContent = '';
-                    statusMessage.className = 'status';
-                }, 3000);
-                return false;
-            }
-            
-            return true;
-        }
-        
-        // Update step indicator
-        function updateStepIndicator() {
-            steps.forEach((step, index) => {
-                step.classList.remove('active', 'completed');
-                
-                if (index + 1 === currentStep) {
-                    step.classList.add('active');
-                } else if (index + 1 < currentStep) {
-                    step.classList.add('completed');
-                }
-            });
-        }
-        
-        // Generate categories function
-        function generateCategories() {
-            // Clear previous status message
-            statusMessage.textContent = '';
-            statusMessage.className = 'status';
-            
-            // Start building the categories
-            let categories = [];
-            
-            // Add comment header
-            categories.push('<!-- 页面分类开始 -->');
-            categories.push('');
-            
-            // 1. Add page type
-            const pageType = document.querySelector('input[name="page-type"]:checked');
-            categories.push('<!-- 页面基础类型 -->');
-            categories.push(`[[Category:${pageType.value}]]`);
-            categories.push('');
-            
-            // 2. Add cluster affiliations
-            const clusterCheckboxes = document.querySelectorAll('input[name="cluster"]:checked');
-            if (clusterCheckboxes.length > 0) {
-                categories.push('<!-- 层群归属 -->');
-                clusterCheckboxes.forEach(checkbox => {
-                    if (checkbox.value === 'other') {
-                        // Parse custom cluster input
-                        const customClusters = parseCustomInput(otherClusterInput.value);
-                        customClusters.forEach(cluster => {
-                            categories.push(`[[Category:${cluster}]]`);
-                        });
-                    } else {
-                        categories.push(`[[Category:${checkbox.value}]]`);
-                    }
-                });
-                categories.push('');
-            }
-            
-            // 3. Add object classifications if any selected
-            const classificationGroups = document.querySelectorAll('.classification-group');
-            let hasClassifications = false;
-            
-            classificationGroups.forEach(group => {
-                if (!group.classList.contains('hidden')) {
-                    const checkboxes = group.querySelectorAll('input[type="checkbox"]:checked');
-                    if (checkboxes.length > 0) {
-                        if (!hasClassifications) {
-                            categories.push('<!-- 对象分级 -->');
-                            hasClassifications = true;
-                        }
-                        
-                        checkboxes.forEach(cb => {
-                            categories.push(`[[Category:${cb.value}]]`);
-                        });
-                    }
-                }
-            });
-            
-            // Add special classification if provided
-            const specialClassification = specialClassificationInput.value.trim();
-            if (specialClassification) {
-                if (!hasClassifications) {
-                    categories.push('<!-- 对象分级 -->');
-                    hasClassifications = true;
-                }
-                
-                const parsedSpecial = parseCustomInput(specialClassification);
-                parsedSpecial.forEach(item => {
-                    categories.push(`[[Category:${item}]]`);
-                });
-            }
-            
-            if (hasClassifications) {
-                categories.push('');
-            }
-            
-            // 4. Add special categories if provided
-            const specialCategories = specialCategoriesInput.value.trim();
-            if (specialCategories) {
-                categories.push('<!-- 特殊分类 -->');
-                const parsedSpecialCategories = parseCustomInput(specialCategories);
-                parsedSpecialCategories.forEach(item => {
-                    categories.push(`[[Category:${item}]]`);
-                });
-                categories.push('');
-            }
-            
-            // Add comment footer
-            categories.push('<!-- 页面分类结束 -->');
-            
-            // Display the result
-            resultCode.textContent = categories.join('\n');
-            
-            // Show success message
-            statusMessage.textContent = '分类代码生成成功！';
-            statusMessage.className = 'status success';
-        }
-        
-        // Parse custom input for categories
-        function parseCustomInput(input) {
-            if (!input.trim()) return [];
-            
-            // Split by comma or newline
-            const items = input.split(/[,\n]/);
-            const result = [];
-            
-            items.forEach(item => {
-                const trimmed = item.trim();
-                if (trimmed) {
-                    // Remove any existing [[Category:...]] wrapper
-                    const cleanName = trimmed.replace(/^\[\[Category:(.*)\]\]$/, '$1');
-                    result.push(cleanName);
-                }
-            });
-            
-            return result;
-        }
-        
-        // Copy to clipboard function
-        function copyToClipboard() {
-            if (!resultCode.textContent || resultCode.textContent.startsWith('//')) {
-                statusMessage.textContent = '错误: 请先生成分类代码';
-                statusMessage.className = 'status error';
-                return;
-            }
-            
-            // Select the text
-            const range = document.createRange();
-            range.selectNodeContents(resultCode);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            
-            // Copy to clipboard
-            try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    statusMessage.textContent = '分类代码已复制到剪贴板！';
-                    statusMessage.className = 'status success';
-                } else {
-                    throw new Error('复制失败');
-                }
-            } catch (err) {
-                statusMessage.textContent = '错误: 无法复制到剪贴板，请手动选择并复制';
-                statusMessage.className = 'status error';
-            }
-            
-            // Deselect the text
-            selection.removeAllRanges();
-        }
-        
-        // Reset form function
-        function resetForm() {
-            // Reset all checkboxes and radio buttons
-            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-                cb.checked = false;
-            });
-            
-            document.querySelectorAll('input[type="radio"]').forEach(rb => {
-                rb.checked = false;
-            });
-            
-            // Reset all text inputs and textareas
-            document.querySelectorAll('input[type="text"], textarea').forEach(input => {
-                input.value = '';
-            });
-            
-            // Hide classification groups
-            survivalDifficulty.classList.add('hidden');
-            itemClassification.classList.add('hidden');
-            entityClassification.classList.add('hidden');
-            
-            // Hide other cluster container
-            otherClusterContainer.classList.add('hidden');
-            
-            // Hide cluster warning
-            clusterWarning.classList.add('hidden');
-            
-            // Reset steps
-            currentStep = 1;
-            updateStepIndicator();
-            
-            // Hide all step sections except first
-            stepSections.forEach((section, index) => {
-                if (index === 0) {
-                    section.classList.remove('hidden');
-                } else {
-                    section.classList.add('hidden');
-                }
-            });
-            
-            // Hide result section
-            stepSections[4].classList.add('hidden');
-            
-            // Reset buttons
-            generateBtn.style.display = 'inline-block';
-            generateBtn.textContent = '下一步';
-            prevBtn.style.display = 'none';
-            
-            // Reset result code
-            resultCode.textContent = '// 请选择分类选项，然后点击"生成分类代码"按钮\n// 生成的内容将显示在这里';
-            
-            // Clear status message
-            statusMessage.textContent = '';
-            statusMessage.className = 'status';
-            
-            // Show success message
-            statusMessage.textContent = '表单已重置';
-            statusMessage.className = 'status success';
-            setTimeout(() => {
-                statusMessage.textContent = '';
+                resultCode.textContent = '// 请选择分类选项，然后点击「生成分类代码」按钮\n// 生成的内容将显示在这里';
                 statusMessage.className = 'status';
-            }, 2000);
-        }
+                statusMessage.textContent = '';
+                showStatus('表单已重置', 'success');
+                setTimeout(() => { statusMessage.className = 'status'; statusMessage.textContent = ''; }, 2000);
+            }
+
+            function showStatus(msg, type) {
+                statusMessage.textContent = msg;
+                statusMessage.className = 'status ' + (type || '');
+            }
+
+            // ---- 启动 ----
+            document.addEventListener('DOMContentLoaded', init);
+        })();
     </script>
 </body>
 </html>
